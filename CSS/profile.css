@@ -53,11 +53,14 @@ html, body
     outline: none;
     border-radius: 10px;
     padding: 5px;
-    margin-bottom: 10px;
+    margin-top: 20px;
     text-align: center;
-    height: 30px;
+    height: 40px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
     color: #e7e7e7;
+    width: 26vw;
+    
+
     
 }
 
@@ -72,12 +75,27 @@ html, body
 }
 
 
-.btn
+.input-container
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.btn-password
 {
     background-color: var(--accent-color);
     color: white;
     border: none;
     outline: none;
-    padding: 3px;
-    border-radius: 5px;
+    width: max-content;
+    margin-top: 20px;
+    padding: 8px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn-password:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }

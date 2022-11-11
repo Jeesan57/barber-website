@@ -16,15 +16,17 @@ body {
 }
 
 .top-bar {
-    height: 40px;
+    height: max-content;
+    padding: 10px;
     display: flex;
     align-items: center;
 }
 
 .icon {
-    margin-left: 10px;
     color: var(--accent-color);
-    font-size: x-large;
+    font-size: xx-large;
+
+    text-shadow: 2px 2px var(--secondary-color);
 }
 
 .login-box {
@@ -50,8 +52,7 @@ body {
 }
 
 
-.input 
-{
+.input {
 
     background-color: var(--secondary-color);
     color: #e7e7e7;
@@ -60,21 +61,38 @@ body {
     outline: none;
     border-radius: 10px;
     padding: 5px;
-    margin-bottom: 10px;
-    text-align: center;
+    margin-bottom: 20px;
+
+    width: 26vw;
+    height: 40px;
 
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
 }
 
-.prompt-container
-{
-    display: flex;
-    gap: 10px;
-    
+.input::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 1;
+    /* Firefox */
 }
 
-.action-button 
-{
+.input:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: white;
+}
+
+.input::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: white;
+}
+
+.prompt-container {
+    display: flex;
+    gap: 10px;
+
+}
+
+.action-button {
     background-color: var(--accent-color);
     color: white;
 
@@ -87,17 +105,16 @@ body {
 
     cursor: pointer;
 }
-.action-button:hover
-{
+
+.action-button:hover {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.change-page-link 
-{
+.change-page-link {
     text-decoration: none;
     color: var(--accent-color);
 }
-.change-page-link:hover
-{
+
+.change-page-link:hover {
     text-decoration: underline;
 }

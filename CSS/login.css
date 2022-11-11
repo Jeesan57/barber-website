@@ -10,7 +10,93 @@
     --accent-color: #947eeb;
 }
 
-html, body
-{
+html,
+body {
     background-color: var(--primary-color);
+}
+
+.top-bar {
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    margin-left: 10px;
+    color: var(--accent-color);
+    font-size: x-large;
+}
+
+.login-box {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    min-width: max-content;
+
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--secondary-color);
+    color: #e7e7e7;
+    border-radius: 20px;
+
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+
+.input 
+{
+
+    background-color: var(--secondary-color);
+    color: #e7e7e7;
+
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
+}
+.prompt-container
+{
+    display: flex;
+    gap: 10px;
+    
+}
+
+.action-button 
+{
+    background-color: var(--accent-color);
+    color: white;
+
+    border: none;
+    outline: none;
+
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+
+    cursor: pointer;
+}
+.action-button:hover
+{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.change-page-link 
+{
+    text-decoration: none;
+    color: var(--accent-color);
+}
+.change-page-link:hover
+{
+    text-decoration: underline;
 }

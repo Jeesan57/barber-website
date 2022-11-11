@@ -93,7 +93,7 @@ body {
 .select-container select {
     border: none;
     outline: none;
-    width: 70%;
+    width: max-content;
     height: 100%;
     padding-left: 10px;
     border-radius: 10px;
@@ -122,22 +122,6 @@ body {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
 }
 
-.input::placeholder {
-    /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: white;
-    opacity: 1;
-    /* Firefox */
-}
-
-.input:-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: white;
-}
-
-.input::-ms-input-placeholder {
-    /* Microsoft Edge */
-    color: white;
-}
 
 .prompt-container {
     display: flex;

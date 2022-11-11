@@ -31,3 +31,53 @@ html, body
     align-items: center;
     
 }
+
+.change-information-area
+{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    min-width: max-content;
+    padding: 20px;
+    background-color: var(--secondary-color);
+    color: #e7e7e7;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.change-information-area .input
+{
+    background-color: var(--secondary-color);
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+    height: 30px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
+    color: #e7e7e7;
+    
+}
+
+.edit-profile-info
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 30%;
+    gap: 10px;
+    color: white;
+}
+
+
+.btn
+{
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    outline: none;
+    padding: 3px;
+    border-radius: 5px;
+}

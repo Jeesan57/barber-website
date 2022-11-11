@@ -5,11 +5,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barber Shop</title>
+
+    <!-- adding css -->
+    <link rel="stylesheet" href="./CSS/signup.css">
+    <title>signup to Barber Shop</title>
 </head>
 
 <body>
+    <div class="top-bar">
+        <p class="icon">Barber Shop</p>
+    </div>
+    <div class="signup-box">
 
+        <div class="select-container">
+            <label for="user-type">user type</label>
+            <select name="user-type" id="user-type">
+                <option value="owner">Shop owner</option>
+                <option value="client">Client</option>
+            </select>
+        </div>
+
+
+        <input class="input" type="text" placeholder="username">
+        <input class="input" type="password" placeholder="password">
+        <button class="action-button">Continue</button>
+        <div class="prompt-container">
+            <p>Already have an account? </p>
+            <a href="./index.html" class="change-page-link">Login</a>
+        </div>
+    </div>
 </body>
 
 </html>

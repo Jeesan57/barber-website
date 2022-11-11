@@ -15,7 +15,19 @@ html, body
     background-color: var(--primary-color);
 }
 
-img
+#user-image
 {
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
+   
+}
+
+.profile-image
+{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
 }

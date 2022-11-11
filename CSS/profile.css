@@ -14,3 +14,8 @@ html, body
 {
     background-color: var(--primary-color);
 }
+
+img
+{
+    border-radius: 50%;
+}

@@ -1,0 +1,106 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #262636;
+  --secondary-color: #3d3d4c;
+  --accent-color: #947eeb;
+}
+
+html,
+body {
+  background-color: var(--primary-color);
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-height: 100vh;
+}
+
+.top-bar {
+  height: max-content;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  color: var(--accent-color);
+}
+
+.icon {
+  color: var(--accent-color);
+  font-size: xx-large;
+  text-shadow: 2px 2px var(--secondary-color);
+}
+
+.dashboard-link {
+  text-decoration: none;
+  padding: 10px 10px;
+  background-color: #3d3d4c;
+  color: white;
+
+  border-radius: 5px;
+
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  color: var(--accent-color);
+}
+
+.container {
+  max-height: 90vh;
+  overflow-y: scroll;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.approval-box {
+  margin: auto;
+  margin-top: 20px;
+  width: max-content;
+  padding: 30px;
+  background-color: var(--secondary-color);
+  color: #e7e7e7;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.request-text {
+  font-size: larger;
+  margin-bottom: 20px;
+}
+
+.mark-as-done {
+
+  border: none;
+  outline: none;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: var(--accent-color);
+  color: white;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}

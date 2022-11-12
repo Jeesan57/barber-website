@@ -1,0 +1,29 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #262636;
+    --secondary-color: #3d3d4c;
+    --accent-color: #947eeb;
+}
+
+html, body
+{
+    background-color: var(--primary-color);
+}
+
+.top-bar {
+    height: max-content;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    color: var(--accent-color);
+    font-size: xx-large;
+    text-shadow: 2px 2px var(--secondary-color);
+}

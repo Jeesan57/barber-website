@@ -1,0 +1,138 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #262636;
+  --secondary-color: #3d3d4c;
+  --accent-color: #947eeb;
+}
+
+html,
+body {
+  background-color: var(--primary-color);
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-height: 100vh;
+}
+
+.top-bar {
+  height: max-content;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  color: var(--accent-color);
+}
+
+.icon {
+  color: var(--accent-color);
+  font-size: xx-large;
+  text-shadow: 2px 2px var(--secondary-color);
+}
+
+.dashboard-link {
+  text-decoration: none;
+  padding: 10px 10px;
+  background-color: #3d3d4c;
+  color: white;
+
+  border-radius: 5px;
+
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  background-color: blacku;
+}
+.search-container input {
+  background-color: var(--secondary-color);
+  color: #e7e7e7;
+
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  padding: 5px;
+
+  width: 24vw;
+  height: 40px;
+
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
+}
+
+.search-button {
+  background-color: var(--accent-color);
+  color: white;
+
+  border: none;
+  outline: none;
+
+  padding: 10px;
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+
+.container {
+  max-height: 80vh;
+  overflow-y: scroll;
+  height: max-content;
+  padding: 20px;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.shop
+{
+    margin: auto;
+    margin-top: 20px;
+    width: 26vw;
+    padding: 30px;
+    background-color: var(--secondary-color);
+    color: #e7e7e7;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.prompt 
+{
+    margin-bottom: 20px;
+    font-weight: 900;
+    font-size: 25px;
+}
+.prompt span 
+{
+    font-weight: normal;
+    font-size: 22px;
+}
+.view {
+  text-decoration: none;
+  padding: 6px;
+  border-radius: 10px;
+  background-color: var(--accent-color);
+  color: white;
+}

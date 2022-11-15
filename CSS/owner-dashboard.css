@@ -96,7 +96,7 @@ body {
 
 .shop-name
 {
-  color: var(--accent-color);
+  color: #e7e7e7;
   padding: 10px;
   font-weight: bold;
   font-size: medium;
@@ -105,7 +105,7 @@ body {
 
 .change-password-link a
 {
-  color: var(--accent-color);
+  color: #e7e7e7;
   padding: 10px;
   font-weight: bold;
   font-size: medium;
@@ -121,7 +121,7 @@ body {
 .category
 {
   margin-top: 50px;
-  color: var(--accent-color);
+  color: #e7e7e7;
   font-weight: bold;
   font-size: medium;
   text-align: center;
@@ -182,7 +182,7 @@ body {
 }
 
 .owner-content .card h4 {
-  text-transform: uppercase;
+  color: #e7e7e7;
 }
 .owner-content .card p {
   font-size: 12px;

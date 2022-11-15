@@ -52,11 +52,31 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+
+.profile-info {
+  width: 280px;
+  height: max-content;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+.profile-info img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.profile-info p {
+  font-weight: bold;
+  font-size: 18px;
+  color: white;
+}
+
 .left-container {
   position: absolute;
   top: 10vh;
   bottom: 0;
-  height: 85vh;
+  height: 90vh;
   left: 0;
   width: 90px;
   width: 280px;
@@ -108,24 +128,6 @@ body {
 
 }
 
-.profile-info {
-  width: 280px;
-  height: max-content;
-  display: flex;
-  align-items: center;
-  padding: 20px;
-}
-.profile-info img {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-.profile-info p {
-  font-weight: bold;
-  font-size: 18px;
-  color: white;
-}
 
 .logout {
   position: absolute;

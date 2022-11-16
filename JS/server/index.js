@@ -377,32 +377,152 @@ app.get('/remove-category', async (req, res) => {
 })
 
 
-// // http://localhost:3000/add-category?categoryID=123&shopID=123&categoryName=cut-hair
-// app.get('/add-category', async (req, res) => {
+// http://localhost:3000/add-category?categoryID=123&categoryName=cut-hair&shopID=123
+app.get('/add-category', async (req, res) => {
 
-//     let categoryID = req.query.categoryID;
-//     let shopID = req.query.shopID;
-//     let categoryName = req.query.categoryName;
-
-
-//     let connection = mysql.createConnection({
-//         host: "localhost",
-//         user: "root",
-//         password: "",
-//         database: "barbar_shop"
-//     });
-
-//     connection.connect(function (err) {
-//         connection.query(`INSERT INTO category (userID, userName, pass, isOwner) values ('${userID}', '${userName}', '${password}', '${isOwner}')`,
-//             function (err, result, fields) {
-//             });
+    let categoryID = req.query.categoryID;
+    let categoryName = req.query.categoryName;
+    let shopID = req.query.shopID;
 
 
-//         res.json({ error: false });
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    connection.connect(function (err) {
+        connection.query(`INSERT INTO category (categoryID, categoryName, shopID) values ('${categoryID}', '${categoryName}', '${shopID}')`,
+            function (err, result, fields) {
+            });
 
 
-//     });
-// })
+        res.json({ error: false });
+
+
+    });
+})
+
+
+// 
+
+
+// http://localhost:3000/update-password?userID=111&password=cut-hair
+app.get('/update-password', async (req, res) => {
+
+    let userID = req.query.userID;
+    let password = req.query.password;
+
+
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    connection.connect(function (err) {
+        connection.query(`UPDATE users SET pass='${password}' WHERE userID='${userID}'`,
+            function (err, result, fields) {
+            });
+
+
+        res.json({ error: false });
+
+
+    });
+})
+
+
+// http://localhost:3000/update-request-status?requestID=1&status=pending
+app.get('/update-request-status', async (req, res) => {
+
+    let requestID = req.query.requestID;
+    let status = req.query.status;
+
+
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    connection.connect(function (err) {
+        connection.query(`UPDATE request SET status='${status}' WHERE requestID='${requestID}'`,
+            function (err, result, fields) {
+            });
+
+
+        res.json({ error: false });
+
+
+    });
+})
+
+// http://localhost:3000/change-category-name?categoryID=1&categoryName=new-cut-hair
+app.get('/change-category-name', async (req, res) => {
+
+    let categoryID = req.query.categoryID;
+    let categoryName = req.query.categoryName;
+
+
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    connection.connect(function (err) {
+        connection.query(`UPDATE category SET categoryName='${categoryName}' WHERE categoryID='${categoryID}'`,
+            function (err, result, fields) {
+            });
+
+
+        res.json({ error: false });
+
+
+    });
+})
+
+
+// http://localhost:3000/add-service?serviceID=11231s1&serviceType=new-cut-hair-bati-cut&price=100&categoryID=1
+app.get('/add-service', async (req, res) => {
+
+    let serviceID = req.query.serviceID;
+    let serviceType = req.query.serviceType;
+    let price = req.query.price;
+    let categoryID = req.query.categoryID;
+
+
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    connection.connect(function (err) {
+        connection.query(`INSERT INTO service (serviceID, serviceType, price, categoryID) values ('${serviceID}', '${serviceType}', '${price}', '${categoryID}')`,
+            function (err, result, fields) {
+            });
+
+
+        res.json({ error: false });
+
+
+    });
+})
+
+
+
 
 
 

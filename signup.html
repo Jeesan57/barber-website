@@ -20,20 +20,21 @@
         <div class="select-container">
             <label for="user-type">user type</label>
             <select name="user-type" id="user-type">
-                <option value="owner">Shop owner</option>
-                <option value="client">Client</option>
+                <option value="1">Shop owner</option>
+                <option value="0">Client</option>
             </select>
         </div>
 
 
         <input class="input" type="text" placeholder="username">
         <input class="input" type="password" placeholder="password">
-        <button class="action-button">Continue</button>
+        <button class="action-button" onclick="signUp()">Continue</button>
         <div class="prompt-container">
             <p>Already have an account? </p>
             <a href="./index.html" class="change-page-link">Login</a>
         </div>
     </div>
 </body>
+<script src="./JS/client/signup.js"></script>
 
 </html>

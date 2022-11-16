@@ -9,24 +9,21 @@ async function changePage(userName, password) {
     let data = await response.json();
     console.log(data);
     if (data.error) {
+        document.getElementById('error').style.display = "block";
         return;
     }
-    else {
+else {
 
         // how to set and get
         // localStorage['names']=JSON.stringify(names); var storedNames=JSON.parse(localStorage['names']);
 
+        document.getElementById('error').style.display = "none";
         localStorage['userID'] = JSON.stringify(data.user.userID);
 
-
-        if(data.user.isOwner === 1)
-        {
+        if (data.user.isOwner === 1)
             document.location.href = (location.protocol + '//' + location.host + "/owner-dashboard.html");
-        }
         else
-        {
             document.location.href = (location.protocol + '//' + location.host + "/user-dashboard.html");
-        }
     }
     // login if no error
 }

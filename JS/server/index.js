@@ -658,8 +658,108 @@ app.get('/get-category-service', async (req, res) => {
 
 
 
+//INSERT INTO `request` (`requestID`, `requestedBy`, `requestedForShop`, `status`, `requestTime`, `timestamp`) VALUES ('`12123', 'asd', 'sadas', '123123', '12312', '123123');
+
+// http://localhost:3000/add-request?requestID=123ftycf&shopName=123ftycf&serviceType=123ftycf&requestedBy=cut-hair&requestedForShop=123&status=123&requestTime=123&timestamp=123
+app.get('/add-request', async (req, res) => {
+
+    let requestID = req.query.requestID;
+    let shopName = req.query.shopName;
+    let serviceType = req.query.serviceType;
+
+    let requestedBy = req.query.requestedBy;
+    let requestedForShop = req.query.requestedForShop;
+    let status = req.query.status;
+    let requestTime = req.query.requestTime;
+    let timestamp = req.query.timestamp;
 
 
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    connection.connect(function (err) {
+        connection.query(`INSERT INTO request (requestID, shopName, serviceType, requestedBy, requestedForShop, status, requestTime, timestamp) 
+        VALUES ('${requestID}', '${shopName}','${serviceType}', '${requestedBy}', '${requestedForShop}', '${status}', '${requestTime}', '${timestamp}');`,
+            function (err, result, fields) {
+            });
+
+
+        res.json({ error: false });
+
+
+    });
+})
+
+
+/*
+ownerID
+shopID
+shopName
+shopDescription
+contactInformation
+workingHours
+*/
+
+
+// http://localhost:3000/update-shop?shopID=12&shopName=ffjfh&shopDescription=fkfhglld&contactInformation=ffaljflatohglhd&workingHours=23:347
+app.get('/update-shop', async (req, res) => {
+
+    let shopID = req.query.shopID;
+    let shopName = req.query.shopName;
+    let shopDescription = req.query.shopDescription;
+    let contactInformation = req.query.contactInformation;
+    let workingHours = req.query.workingHours;
+
+
+
+
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    connection.connect(function (err) {
+        connection.query(`UPDATE shops SET
+         shopName='${shopName}', shopDescription='${shopDescription}', contactInformation='${contactInformation}', workingHours='${workingHours}'  WHERE shopID='${shopID}'`,
+            function (err, result, fields) {
+            });
+
+
+        res.json({ error: false });
+
+
+    });
+})
+
+
+
+// http://localhost:3000/get-request?requestedBy=cut-hair
+app.get('/get-request', async (req, res) => {
+
+    let requestedBy = req.query.requestedBy;
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+  
+    connection.connect(function (err) {
+        connection.query(`SELECT * FROM request  WHERE request.requestedBy='${requestedBy}'`,
+            function (err, result, fields) {
+                res.json({ error: false, result: result });
+            });
+    });
+})
 
 
 

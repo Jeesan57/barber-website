@@ -492,13 +492,15 @@ app.get('/change-category-name', async (req, res) => {
 })
 
 
-// http://localhost:3000/add-service?serviceID=11231s1&serviceType=new-cut-hair-bati-cut&price=100&categoryID=1
+// http://localhost:3000/add-service?serviceID=11231s1&serviceType=new-cut-hair-bati-cut&price=100&categoryID=1&shopID=12
 app.get('/add-service', async (req, res) => {
 
     let serviceID = req.query.serviceID;
     let serviceType = req.query.serviceType;
     let price = req.query.price;
     let categoryID = req.query.categoryID;
+    let shopID = req.query.shopID;
+
 
 
 
@@ -510,7 +512,7 @@ app.get('/add-service', async (req, res) => {
     });
 
     connection.connect(function (err) {
-        connection.query(`INSERT INTO service (serviceID, serviceType, price, categoryID) values ('${serviceID}', '${serviceType}', '${price}', '${categoryID}')`,
+        connection.query(`INSERT INTO service (serviceID, serviceType, price, categoryID, shopID) values ('${serviceID}', '${serviceType}', '${price}', '${categoryID}', '${shopID}')`,
             function (err, result, fields) {
             });
 
@@ -518,6 +520,139 @@ app.get('/add-service', async (req, res) => {
         res.json({ error: false });
 
 
+    });
+})
+
+
+// http://localhost:3000/update-service?serviceID=11231s1&serviceType=updated&price=1200
+app.get('/update-service', async (req, res) => {
+
+    let serviceID = req.query.serviceID;
+    let serviceType = req.query.serviceType;
+    let price = req.query.price;
+
+
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    connection.connect(function (err) {
+        connection.query(`UPDATE service SET serviceType='${serviceType}', price='${price}' WHERE serviceID='${serviceID}'`,
+            function (err, result, fields) {
+            });
+
+
+        res.json({ error: false });
+
+
+    });
+})
+
+
+// 
+
+// http://localhost:3000/get-request-count?status=accepte&shopID=1232qe
+app.get('/get-request-count', async (req, res) => {
+
+    let status = req.query.status;
+    let shopID = req.query.shopID;
+
+
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    connection.connect(function (err) {
+        connection.query(`SELECT COUNT(requestID) FROM request WHERE status="${status}" AND requestedForShop="${shopID}"`,
+            function (err, result, fields) {
+                let count = 0;
+                count = result[0]["COUNT(requestID)"];
+                res.json({ error: false, count });
+                return;
+            });
+
+
+
+
+    });
+})
+
+
+// http://localhost:3000/get-shop-statistics?shopID=12
+app.get('/get-shop-statistics', async (req, res) => {
+
+    let shopID = req.query.shopID;
+
+
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    connection.connect(function (err) {
+
+
+        let shopName = "";
+        let categoryCount = 0;
+        let serviceCount = 0;
+
+        // get shop name
+        connection.query(`SELECT shopName FROM shops WHERE shopID="${shopID}"`,
+            function (err, result, fields) {
+                shopName = result[0].shopName;
+                // get category count
+                connection.query(`SELECT COUNT(categoryID) FROM category WHERE shopID="${shopID}"`,
+                    function (err, result, fields) {
+                        categoryCount = result[0]["COUNT(categoryID)"];
+
+                        // get service count
+                        connection.query(`SELECT COUNT(serviceID) FROM service WHERE shopID="${shopID}"`,
+                            function (err, result, fields) {
+                                serviceCount = result[0]["COUNT(serviceID)"];
+
+                                res.json({ error: false, shopName, categoryCount, serviceCount });
+                                return;
+                            });
+                    });
+            });
+
+
+
+    });
+})
+
+
+
+
+// http://localhost:3000/get-category-service?categoryID=1
+app.get('/get-category-service', async (req, res) => {
+
+    let categoryID = req.query.categoryID;
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    let queryShop = null;
+    connection.connect(function (err) {
+        connection.query(`SELECT * FROM category LEFT JOIN service ON category.categoryID=service.categoryID WHERE category.categoryID='${categoryID}'`,
+            function (err, result, fields) {
+                res.json({ error: false, result: result });
+            });
     });
 })
 

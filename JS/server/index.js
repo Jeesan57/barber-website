@@ -48,7 +48,6 @@ app.get('/create-user', async (req, res) => {
 
         let queriedUser = null;
         connection.query(`SELECT * FROM users WHERE userName='${userName}'`, function (err, result, fields) {
-            console.log(result);
             if (result && result.length !== 0) {
                 queriedUser = result[0];
             }
@@ -58,7 +57,6 @@ app.get('/create-user', async (req, res) => {
             }
             connection.query(`INSERT INTO users (userID, userName, pass, isOwner) values ('${userID}', '${userName}', '${password}', '${isOwner}')`,
                 function (err, result, fields) {
-                    console.log(result);
                     if (!result) {
                         res.json({ error: true });
                         return;
@@ -94,7 +92,6 @@ app.get('/login', async (req, res) => {
     let queryResult = null;
     connection.connect(function (err) {
         connection.query(`SELECT * FROM users WHERE userName='${userName}'`, function (err, result, fields) {
-            console.log(result);
             queryResult = result;
             if (result && result.length !== 0) {
                 queriedUser = result[0];
@@ -120,6 +117,300 @@ app.get('/login', async (req, res) => {
 
 
 
+
+// http://localhost:3000/get-shop?userID=Jeeshan3
+app.get('/get-shop', async (req, res) => {
+
+    let userID = req.query.userID;
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    let queryShop = null;
+    connection.connect(function (err) {
+        connection.query(`SELECT * FROM shops WHERE ownerID='${userID}'`, function (err, result, fields) {
+            queryResult = result;
+            if (result && result.length !== 0) {
+                queryShop = result[0];
+            }
+
+            if (queryShop !== null) {
+
+                res.json({ error: false, shop: queryShop });
+                return;
+            }
+            else {
+                res.json({ error: true, message: 'shop not found' });
+                return;
+            }
+        });
+    });
+})
+
+
+
+// http://localhost:3000/get-all-shops
+app.get('/get-all-shops', async (req, res) => {
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    let queryShop = null;
+    connection.connect(function (err) {
+        connection.query(`SELECT * FROM shops `, function (err, result, fields) {
+            queryResult = result;
+            if (result && result.length !== 0) {
+                queryShop = result;
+            }
+
+            if (queryShop !== null) {
+
+                res.json({ error: false, shops: queryShop });
+                return;
+            }
+            else {
+                res.json({ error: true, message: 'no shop found' });
+                return;
+            }
+        });
+    });
+})
+
+
+
+// http://localhost:3000/get-user?userID=Jeeshan3
+app.get('/get-user', async (req, res) => {
+
+    let userID = req.query.userID;
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    let queryUser = null;
+    connection.connect(function (err) {
+        connection.query(`SELECT * FROM users WHERE userID='${userID}'`, function (err, result, fields) {
+            if (result && result.length !== 0) {
+                queryUser = result[0];
+            }
+
+            if (queryUser !== null) {
+
+                res.json({ error: false, user: queryUser });
+                return;
+            }
+            else {
+                res.json({ error: true, message: 'user not found' });
+                return;
+            }
+        });
+    });
+})
+
+
+// http://localhost:3000/get-request-statuses?userID=Jeeshan
+app.get('/get-request-statuses', async (req, res) => {
+
+    let userID = req.query.userID;
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    let queriedRequests = null;
+    connection.connect(function (err) {
+        connection.query(`SELECT * FROM request WHERE status='accepted' OR status='denied' AND requestedBy='${userID}'`, function (err, result, fields) {
+            if (result && result.length !== 0) {
+                queriedRequests = result;
+            }
+
+            if (queriedRequests !== null) {
+                res.json({ error: false, requests: queriedRequests });
+                return;
+            }
+            else {
+                res.json({ error: true, message: 'no requests found' });
+                return;
+            }
+        });
+    });
+})
+
+// http://localhost:3000/get-pending-requests?userID=Jeeshan
+app.get('/get-pending-requests', async (req, res) => {
+
+    let userID = req.query.userID;
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    let queriedRequests = null;
+    connection.connect(function (err) {
+        connection.query(`SELECT * FROM request WHERE status='pending' AND requestedBy='${userID}'`, function (err, result, fields) {
+            if (result && result.length !== 0) {
+                queriedRequests = result;
+            }
+
+            if (queriedRequests !== null) {
+                res.json({ error: false, requests: queriedRequests });
+                return;
+            }
+            else {
+                res.json({ error: true, message: 'no requests found' });
+                return;
+            }
+        });
+    });
+})
+
+
+
+// http://localhost:3000/remove-service-by-id?serviceID=Jeeshan
+app.get('/remove-service-by-id', async (req, res) => {
+
+    let serviceID = req.query.serviceID;
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    let queriedRequests = null;
+    connection.connect(function (err) {
+        connection.query(`DELETE FROM service WHERE serviceID='${serviceID}'`, function (err, result, fields) {
+            if (result) {
+                queriedRequests = result;
+            }
+
+            if (queriedRequests !== null && queriedRequests.affectedRows !== 0) {
+                res.json({ error: false });
+                return;
+            }
+            else {
+                res.json({ error: true });
+                return;
+            }
+        });
+    });
+})
+
+
+// http://localhost:3000/remove-service-by-categoryID?categoryID=123
+app.get('/remove-service-by-categoryID', async (req, res) => {
+
+    let categoryID = req.query.categoryID;
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    let queriedRequests = null;
+    connection.connect(function (err) {
+        connection.query(`DELETE FROM service WHERE categoryID='${categoryID}'`, function (err, result, fields) {
+            if (result) {
+                queriedRequests = result;
+            }
+
+            if (queriedRequests !== null && queriedRequests.affectedRows !== 0) {
+                res.json({ error: false });
+                return;
+            }
+            else {
+                res.json({ error: true });
+                return;
+            }
+        });
+    });
+})
+
+
+// http://localhost:3000/remove-category?categoryID=123&shopID=123
+app.get('/remove-category', async (req, res) => {
+
+    let categoryID = req.query.categoryID;
+    let shopID = req.query.shopID;
+
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    let queriedRequests = null;
+    let error = false;
+    connection.connect(function (err) {
+        connection.query(`DELETE FROM service WHERE categoryID='${categoryID}'`, function (err, result, fields) {
+        });
+
+        connection.query(`DELETE FROM category WHERE shopID='${shopID}' AND categoryID='${categoryID}'`, function (err, result, fields) {
+        });
+
+        res.json({ error: false });
+
+
+    });
+})
+
+
+// // http://localhost:3000/add-category?categoryID=123&shopID=123&categoryName=cut-hair
+// app.get('/add-category', async (req, res) => {
+
+//     let categoryID = req.query.categoryID;
+//     let shopID = req.query.shopID;
+//     let categoryName = req.query.categoryName;
+
+
+//     let connection = mysql.createConnection({
+//         host: "localhost",
+//         user: "root",
+//         password: "",
+//         database: "barbar_shop"
+//     });
+
+//     connection.connect(function (err) {
+//         connection.query(`INSERT INTO category (userID, userName, pass, isOwner) values ('${userID}', '${userName}', '${password}', '${isOwner}')`,
+//             function (err, result, fields) {
+//             });
+
+
+//         res.json({ error: false });
+
+
+//     });
+// })
+
+
+
+
+
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
+
+

@@ -12,7 +12,7 @@ async function changePage(userName, password) {
         document.getElementById('error').style.display = "block";
         return;
     }
-else {
+    else {
 
         // how to set and get
         // localStorage['names']=JSON.stringify(names); var storedNames=JSON.parse(localStorage['names']);
@@ -20,10 +20,14 @@ else {
         document.getElementById('error').style.display = "none";
         localStorage['userID'] = JSON.stringify(data.user.userID);
 
-        if (data.user.isOwner === 1)
+        if (data.user.isOwner === 1) {
+            localStorage['isOwner'] = JSON.stringify(1);
             document.location.href = (location.protocol + '//' + location.host + "/owner-dashboard.html");
-        else
+        }
+        else {
+            localStorage['isOwner'] = JSON.stringify(0);
             document.location.href = (location.protocol + '//' + location.host + "/user-dashboard.html");
+        }
     }
     // login if no error
 }

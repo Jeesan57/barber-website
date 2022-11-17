@@ -20,6 +20,12 @@
         <div class="title">
             <h1>User Dashboard</h1>
         </div>
+        <div class="search-container">
+            <input id="search" type="text" placeholder="search by shop name">
+            <button class="search-button" onclick="filterShops()">
+                <i class="fa-solid fa-search"></i>
+            </button>
+        </div>
 
         <div class="container">
             <div class="left-container">
@@ -27,93 +33,27 @@
                     <img src="./assets/profile-image.jpg">
                     <p>Fucker</p>
                 </div>
-               
+
 
                 <div class="move-another-page">
-                    <a href="#">Change Password</a>
-                    <a href="#">Booking History</a>
+                    <a href="./change-password.html">Change Password</a>
+                    <a href="./booking-status.html">Booking History</a>
                 </div>
 
 
-                <button class="logout">
+                <button class="logout" onclick="logout()">
                     <i class="fas fa-sign-out-alt"></i>
                     <span class="nav-item">Log out</span>
                 </button>
             </div>
 
-            <div class="search-container">
-                <input type="text" placeholder="search by shop name">
-                <button class="search-button">
-                    <i class="fa-solid fa-search"></i>
-                </button>
-            </div>
-
-            <div class="container">
-                <div class="shop">
-                    <p class="prompt">
-                        Shop name: <span class="info">Gent's Saloon</span>
-                    </p>
-                    <a href="./shops.html" class="view">
-                        view shop
-                    </a>
-                </div>
-
-                <div class="shop">
-                    <p class="prompt">
-                        Shop name: <span class="info">Gent's Saloon</span>
-                    </p>
-                    <a href="./shops.html" class="view">
-                        view shop
-                    </a>
-                </div>
-
-                <div class="shop">
-                    <p class="prompt">
-                        Shop name: <span class="info">Gent's Saloon</span>
-                    </p>
-                    <a href="./shops.html" class="view">
-                        view shop
-                    </a>
-                </div>
-
-                <div class="shop">
-                    <p class="prompt">
-                        Shop name: <span class="info">Gent's Saloon</span>
-                    </p>
-                    <a href="./shops.html" class="view">
-                        view shop
-                    </a>
-                </div>
-
-                <div class="shop">
-                    <p class="prompt">
-                        Shop name: <span class="info">Gent's Saloon</span>
-                    </p>
-                    <a href="./shops.html" class="view">
-                        view shop
-                    </a>
-                </div>
 
 
-                <div class="shop">
-                    <p class="prompt">
-                        Shop name: <span class="info">Gent's Saloon</span>
-                    </p>
-                    <a href="./shops.html" class="view">
-                        view shop
-                    </a>
-                </div>
-
-                <div class="shop">
-                    <p class="prompt">
-                        Shop name: <span class="info">Gent's Saloon</span>
-                    </p>
-                    <a href="./shops.html" class="view">
-                        view shop
-                    </a>
-                </div>
+            <div class="container" id="container">
             </div>
         </div>
 </body>
+
+<script src="./JS/client/user-dashboard.js"></script>
 
 </html>

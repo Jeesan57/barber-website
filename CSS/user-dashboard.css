@@ -108,7 +108,7 @@ body {
 
 .logout {
   position: absolute;
-  bottom: 0;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   background-color: var(--secondary-color);
@@ -131,7 +131,6 @@ body {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-bottom: 20px;
   background-color: blacku;
 }
 .search-container input {
@@ -200,6 +199,9 @@ body {
     margin-bottom: 20px;
     font-weight: 900;
     font-size: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 .prompt span 
 {

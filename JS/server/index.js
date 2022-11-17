@@ -118,10 +118,10 @@ app.get('/login', async (req, res) => {
 
 
 
-// http://localhost:3000/get-shop?userID=Jeeshan3
+// http://localhost:3000/get-shop?shopID=Jeeshan3
 app.get('/get-shop', async (req, res) => {
 
-    let userID = req.query.userID;
+    let shopID = req.query.shopID;
 
     let connection = mysql.createConnection({
         host: "localhost",
@@ -132,7 +132,7 @@ app.get('/get-shop', async (req, res) => {
 
     let queryShop = null;
     connection.connect(function (err) {
-        connection.query(`SELECT * FROM shops WHERE ownerID='${userID}'`, function (err, result, fields) {
+        connection.query(`SELECT * FROM shops WHERE shopID='${shopID}'`, function (err, result, fields) {
             queryResult = result;
             if (result && result.length !== 0) {
                 queryShop = result[0];
@@ -633,10 +633,32 @@ app.get('/get-shop-statistics', async (req, res) => {
 })
 
 
+// http://localhost:3000/get-categories?shopID=12213
+app.get('/get-categories', async (req, res) => {
+
+    let shopID = req.query.shopID;
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    connection.connect(function (err) {
+        connection.query(`SELECT * FROM category WHERE shopID='${shopID}'`,
+            function (err, result, fields) {
+                res.json({ error: false, result: result });
+            });
+    });
+})
 
 
-// http://localhost:3000/get-category-service?categoryID=1
-app.get('/get-category-service', async (req, res) => {
+
+
+
+// http://localhost:3000/get-services?categoryID=1
+app.get('/get-services', async (req, res) => {
 
     let categoryID = req.query.categoryID;
 
@@ -647,9 +669,9 @@ app.get('/get-category-service', async (req, res) => {
         database: "barbar_shop"
     });
 
-    let queryShop = null;
     connection.connect(function (err) {
-        connection.query(`SELECT * FROM category LEFT JOIN service ON category.categoryID=service.categoryID WHERE category.categoryID='${categoryID}'`,
+        // connection.query(`SELECT * FROM category LEFT JOIN service ON category.categoryID=service.categoryID WHERE category.categoryID='${categoryID}'`,
+        connection.query(`SELECT * FROM service WHERE categoryID='${categoryID}'`,
             function (err, result, fields) {
                 res.json({ error: false, result: result });
             });
@@ -752,7 +774,7 @@ app.get('/get-request', async (req, res) => {
         database: "barbar_shop"
     });
 
-  
+
     connection.connect(function (err) {
         connection.query(`SELECT * FROM request  WHERE request.requestedBy='${requestedBy}'`,
             function (err, result, fields) {

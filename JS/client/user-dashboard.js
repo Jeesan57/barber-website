@@ -10,6 +10,22 @@ function logout() {
     document.location.href = (location.protocol + '//' + location.host + "/index.html");
 }
 
+async function getUser() {
+    // get shop information
+    let response, data;
+    let userID = JSON.parse(localStorage['userID']);
+    response = await fetch(`http://localhost:3000/get-user?userID=${userID}`, {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+        },
+    });
+
+    data = await response.json();
+    return data.user;
+}
+
+
 async function getAllShops() {
     let shops = [];
     let response = await fetch(`http://localhost:3000/get-all-shops`, {
@@ -73,6 +89,10 @@ async function populatePageWithShops(shops) {
 async function loadPage() {
     checkIfLoggedIn();
     const shops = await getAllShops();
+    let user = await getUser();
+    username = document.getElementById('username');
+    username.textContent = user.userName;
+
     populatePageWithShops(shops);
 }
 

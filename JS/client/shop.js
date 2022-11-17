@@ -30,7 +30,8 @@ function getQueryParams() {
     return params;
 }
 
-// http://localhost:3000/add-request?requestID=123ftycf&shopName=123ftycf&serviceType=123ftycf&requestedBy=cut-hair&requestedForShop=123&status=123&requestTime=123&timestamp=123
+
+
 // 
 async function addBooking(shopName, serviceType, requestedBy, requestedForShop,  requestTime) {
     let requestID = getRandomString('BOOKING');
@@ -58,7 +59,6 @@ async function getCategories(shopID) {
 
     data = await response.json();
     return data.result;
-
 }
 
 async function getServices(categoryID) {

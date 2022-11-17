@@ -154,6 +154,10 @@
     border-radius: 10px;
     cursor: pointer;
 }
+.save-chategory-button 
+{
+  margin-right: 10px;
+}
 
 .chategory 
 {

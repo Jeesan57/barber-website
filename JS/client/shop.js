@@ -1,3 +1,18 @@
+function getRandomString(key) {
+
+    let strLen = 32;
+    var characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    var result = ""
+    var charactersLength = characters.length;
+
+    for (var i = 0; i < strLen; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return (key + "_" + result);
+}
+
+
 function checkIfLoggedIn() {
     var storedID = JSON.parse(localStorage['userID']);
     if (!storedID)
@@ -13,6 +28,21 @@ function getQueryParams() {
         params[key] = decodeURIComponent(val);
     })
     return params;
+}
+
+// http://localhost:3000/add-request?requestID=123ftycf&shopName=123ftycf&serviceType=123ftycf&requestedBy=cut-hair&requestedForShop=123&status=123&requestTime=123&timestamp=123
+// 
+async function addBooking(shopName, serviceType, requestedBy, requestedForShop,  requestTime) {
+    let requestID = getRandomString('BOOKING');
+    let timestamp = Date.now();
+
+
+    await fetch(`http://localhost:3000/add-request?requestID=${requestID}&shopName=${shopName}&serviceType=${serviceType}&requestedBy=${requestedBy}&requestedForShop=${requestedForShop}&status=pending&requestTime=${requestTime}&timestamp=${timestamp}`, {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+        },
+    });
 }
 
 async function getCategories(shopID) {
@@ -156,12 +186,12 @@ async function loadPage() {
             let serviceTitle = document.createElement('h3');
             serviceTitle.textContent = "Service";
             let serviceName = document.createElement('p');
-            serviceName.textContent = services[i].serviceType;
+            serviceName.textContent = services[j].serviceType;
 
             let servicePriceTitle = document.createElement('h3');
             servicePriceTitle.textContent = "price";
             let servicePrice = document.createElement('p');
-            servicePrice.textContent = services[i].price + '$';
+            servicePrice.textContent = services[j].price + '$';
 
 
 
@@ -178,12 +208,18 @@ async function loadPage() {
 
             let bookingInput = document.createElement('input');
             bookingInput.classList.add('booking-input');
+            bookingInput.setAttribute('id', `${services[j].serviceID}`);
             bookingInput.placeholder = "hh:mm dd/mm/yy";
 
 
 
             bookingButton.onclick = async () => {
-                console.log(services[0].serviceID);
+                let valueOfInput = document.getElementById(services[j].serviceID).value;
+                let userID =  JSON.parse(localStorage['userID']);
+                console.log(valueOfInput);
+                console.log(services[j].serviceID);
+                await addBooking(shop.shopName, services[j].serviceType, userID, shop.shopID, valueOfInput);
+                location.reload();
             }
 
             serviceInformationDiv.appendChild(serviceTitle);

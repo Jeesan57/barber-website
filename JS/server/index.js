@@ -53,7 +53,7 @@ app.get('/create-user', async (req, res) => {
             }
             if (queriedUser !== null) {
                 connection.end();
-                res.json({ error: true });
+                res.json({ error: true, message: 'user already exist with the same username' });
                 return;
             }
             connection.query(`INSERT INTO users (userID, userName, pass, isOwner) values ('${userID}', '${userName}', '${password}', '${isOwner}')`,

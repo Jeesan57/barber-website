@@ -9,6 +9,20 @@ function getQueryParams() {
     return params;
 }
 
+function getRandomString(key) {
+
+    let strLen = 32;
+    var characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    var result = ""
+    var charactersLength = characters.length;
+
+    for (var i = 0; i < strLen; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return (key + "_" + result);
+}
+
 
 
 async function getShop() {
@@ -62,7 +76,7 @@ async function loadPage() {
     contact.textContent = shop.contactInformation;
     workingHours.textContent = shop.workingHours;
 
-    
+
 }
 
 
@@ -81,6 +95,26 @@ async function updateShop() {
         },
     });
     let data = await response.json();
+    location.reload();
+}
+
+
+async function addCategory()
+{
+    // http://localhost:3000/add-category?categoryID=123&categoryName=cut-hair&shopID=123
+
+    let value = document.getElementById('category-name').value;
+    if(!value || value === "") return;
+
+    let shopID = getQueryParams()?.shopID;
+    let categoryID = getRandomString("CATEGORY");
+
+    await fetch(`http://localhost:3000/add-category?categoryID=${categoryID}&categoryName=${value}&shopID=${shopID}`, {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+        },
+    });
     location.reload();
 }
 

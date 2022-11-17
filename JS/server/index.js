@@ -45,7 +45,6 @@ app.get('/create-user', async (req, res) => {
     });
 
     connection.connect(function (err) {
-
         let queriedUser = null;
         connection.query(`SELECT * FROM users WHERE userName='${userName}'`, function (err, result, fields) {
             if (result && result.length !== 0) {
@@ -58,14 +57,13 @@ app.get('/create-user', async (req, res) => {
             }
             connection.query(`INSERT INTO users (userID, userName, pass, isOwner) values ('${userID}', '${userName}', '${password}', '${isOwner}')`,
                 function (err, result, fields) {
-                    if (!result) {
-                        connection.end();
-                        res.json({ error: true });
-                        return;
-                    }
-                    connection.end();
-                    res.json({ error: false, result: { userID, userName, password, isOwner } });
-                    return;
+
+                    connection.query(`INSERT INTO shops (ownerID, shopID) values ('${userID}', '${userID}')`,
+                        function (err, result, fields) {
+                            connection.end();
+                            res.json({ error: false, result: { userID, userName, password, isOwner } });
+                            return;
+                        });
                 });
 
         });
@@ -255,7 +253,7 @@ app.get('/get-request-statuses', async (req, res) => {
             }
             else {
                 connection.end();
-                res.json({ error: true, message: 'no requests found' });
+                res.json({ error: true, message: 'no requests found', requests: queriedRequests });
                 return;
             }
         });
@@ -294,6 +292,41 @@ app.get('/get-pending-requests', async (req, res) => {
         });
     });
 })
+
+
+// http://localhost:3000/get-requests?userID=Jeeshan
+app.get('/get-requests', async (req, res) => {
+
+    let userID = req.query.userID;
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    let queriedRequests = null;
+    connection.connect(function (err) {
+        connection.query(`SELECT * FROM request WHERE requestedBy='${userID}'`, function (err, result, fields) {
+            if (result && result.length !== 0) {
+                queriedRequests = result;
+            }
+
+            if (queriedRequests !== null) {
+                connection.end();
+                res.json({ error: false, requests: queriedRequests });
+                return;
+            }
+            else {
+                connection.end();
+                res.json({ error: true, message: 'no requests found' });
+                return;
+            }
+        });
+    });
+})
+
 
 
 
@@ -599,20 +632,14 @@ app.get('/get-request-count', async (req, res) => {
                 return;
             });
 
-
-
-
     });
 })
 
 
-// http://localhost:3000/get-shop-statistics?shopID=12
+// http://localhost:3000/get-shop-statistics?ownerID=12
 app.get('/get-shop-statistics', async (req, res) => {
 
-    let shopID = req.query.shopID;
-
-
-
+    let ownerID = req.query.ownerID;
     let connection = mysql.createConnection({
         host: "localhost",
         user: "root",
@@ -628,9 +655,15 @@ app.get('/get-shop-statistics', async (req, res) => {
         let serviceCount = 0;
 
         // get shop name
-        connection.query(`SELECT shopName FROM shops WHERE shopID="${shopID}"`,
+        connection.query(`SELECT shopName, shopID FROM shops WHERE ownerID="${ownerID}"`,
             function (err, result, fields) {
+                if (!result || result.length === 0) {
+                    connection.end();
+                    res.json({ error: false, shopName: "", categoryCount: 0, serviceCount: 0 });
+                    return;
+                }
                 shopName = result[0].shopName;
+                let shopID = result[0].shopID;
                 // get category count
                 connection.query(`SELECT COUNT(categoryID) FROM category WHERE shopID="${shopID}"`,
                     function (err, result, fields) {
@@ -641,7 +674,7 @@ app.get('/get-shop-statistics', async (req, res) => {
                             function (err, result, fields) {
                                 serviceCount = result[0]["COUNT(serviceID)"];
                                 connection.end();
-                                res.json({ error: false, shopName, categoryCount, serviceCount });
+                                res.json({ error: false, shopName, shopID, categoryCount, serviceCount });
                                 return;
                             });
                     });

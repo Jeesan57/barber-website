@@ -17,7 +17,7 @@
         <div class="top-bar">
             <p class="icon"><i class="fa-solid fa-shop"></i></p>
 
-            <a class="dashboard-link" href="#">
+            <a class="dashboard-link" href="./owner-dashboard.html">
                 <i class="fa-sharp fa-solid fa-home"></i>
                 Dashboard
             </a>
@@ -28,27 +28,23 @@
 
             <div class="shop-info-container">
                 <h2>Shop Name</h2>
-                <div class="shop-name" contenteditable="true">
-                    shop name
+                <div class="shop-name" contenteditable="true" id="shopname">
                 </div>
                 <h2>Shop description</h2>
-                <div class="shop-description" contenteditable="true">
-                    shop description
+                <div class="shop-description" contenteditable="true" id="description">
                 </div>
                 <h2> contact info</h2>
-                <div class="shop-contact" contenteditable="true">
-                    shop-contact
+                <div class="shop-contact" contenteditable="true" id="contact">
                 </div>
                 <h2> working hour</h2>
-                <div class="shop-working-hour" contenteditable="true">
-                    shop shop-working-hour
+                <div class="shop-working-hour" contenteditable="true" id="hours">
                 </div>
-                <button class="save-shop-button">save <i class="fa-sharp fa-solid fa-save"></i> </button>
+                <button class="save-shop-button" onclick="updateShop()">save <i class="fa-sharp fa-solid fa-save"></i> </button>
             </div>
 
             <div class="chategory-adder-div">
                 <input type="text" class="chategory-name" placeholder="chatergory name">
-                <button class="add-chategory-button">add chategory <i class="fa-sharp fa-solid fa-add"></i> </button>
+                <button class="add-chategory-button" >add chategory <i class="fa-sharp fa-solid fa-add"></i> </button>
             </div>
 
             <div class="chategories">
@@ -327,5 +323,7 @@
     </div>
 
 </body>
+
+<script src="./JS/client/edit-shop.js"></script>
 
 </html>

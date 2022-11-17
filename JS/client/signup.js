@@ -34,7 +34,7 @@ async function createUser(userID, userName, password, isOwner) {
 
 
 async function signUp() {
-    let userID = getRandomString("USER");
+    let userID = getRandomString("ID");
     let isOwner = document.querySelectorAll('select')[0].value;
     let userName = document.querySelectorAll('input')[0].value;
     let password = document.querySelectorAll('input')[1].value;

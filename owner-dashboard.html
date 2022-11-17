@@ -24,10 +24,10 @@
         <div class="left-container">
             <div class="profile-info">
                 <img src="./assets/profile-image.jpg">
-                <p>Fucker</p>
+                <p id="username">username</p>
             </div>
             <div class="shop-name">
-                <p>Shop Name: Fucker Barber shop</p>
+                <p id="shopname"></p>
             </div>
 
             <div class="change-password-link">
@@ -36,10 +36,10 @@
 
             <div class="category">
                 <h3>Shop Statistics</h3>
-                <p>You provide 10 catagory </p>
-                <p>You provice 10 services</p>
+                <p id="category">You provide 0 catagory </p>
+                <p id="service">You provide 0 services</p>
             </div>
-            <button class="logout">
+            <button class="logout" onclick="logout()">
                 <i class="fas fa-sign-out-alt"></i>
                 <span class="nav-item">Log out</span>
             </button>
@@ -50,18 +50,18 @@
 
             <div class="owner-content">
                 <div class="card">
-                    <h4>100 requests need approval</h4>
-                    <button>Go To Approval Page</button>
+                    <h4 id="pending">0 requests need approval</h4>
+                    <button id="approve-button">Go To Approval Page</button>
                 </div>
 
                 <div class="card">
-                    <h4>92 appointments </h4>
-                    <button>Check Booking Page</button>
+                    <h4 id="accepted">0 appointments </h4>
+                    <button id="appointment-button">Check Booking Page</button>
                 </div>
 
                 <div class="card">
                     <h4>change shop information</h4>
-                    <button>Change Information</button>
+                    <button id="change-info">Change Information</button>
                 </div>
 
             </div>
@@ -69,5 +69,6 @@
     </div>
 
 </body>
+<script src="./JS/client/owner-dashboard.js"></script>
 
 </html>

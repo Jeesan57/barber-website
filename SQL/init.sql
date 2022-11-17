@@ -8,6 +8,7 @@ CREATE TABLE users (
 
 CREATE TABLE shops(
   shopID varchar(255),
+  ownerID varchar(255),
   shopName varchar(255) DEFAULT NULL,
   shopDescription varchar(600) DEFAULT NULL,
   contactInformation varchar(600) DEFAULT NULL,

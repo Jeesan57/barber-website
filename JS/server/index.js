@@ -52,15 +52,18 @@ app.get('/create-user', async (req, res) => {
                 queriedUser = result[0];
             }
             if (queriedUser !== null) {
+                connection.end();
                 res.json({ error: true });
                 return;
             }
             connection.query(`INSERT INTO users (userID, userName, pass, isOwner) values ('${userID}', '${userName}', '${password}', '${isOwner}')`,
                 function (err, result, fields) {
                     if (!result) {
+                        connection.end();
                         res.json({ error: true });
                         return;
                     }
+                    connection.end();
                     res.json({ error: false, result: { userID, userName, password, isOwner } });
                     return;
                 });
@@ -99,15 +102,18 @@ app.get('/login', async (req, res) => {
 
             if (queriedUser !== null) {
                 if (queriedUser.pass === password && queriedUser.userName === userName) {
+                    connection.end();
                     res.json({ error: false, user: queriedUser });
                     return;
                 }
                 else {
+                    connection.end();
                     res.json({ error: true, message: "password doesn't match" });
                     return;
                 }
             }
             else {
+                connection.end();
                 res.json({ error: true, message: 'user not found' });
                 return;
             }
@@ -139,11 +145,12 @@ app.get('/get-shop', async (req, res) => {
             }
 
             if (queryShop !== null) {
-
+                connection.end();
                 res.json({ error: false, shop: queryShop });
                 return;
             }
             else {
+                connection.end();
                 res.json({ error: true, message: 'shop not found' });
                 return;
             }
@@ -173,10 +180,12 @@ app.get('/get-all-shops', async (req, res) => {
 
             if (queryShop !== null) {
 
+                connection.end();
                 res.json({ error: false, shops: queryShop });
                 return;
             }
             else {
+                connection.end();
                 res.json({ error: true, message: 'no shop found' });
                 return;
             }
@@ -206,11 +215,12 @@ app.get('/get-user', async (req, res) => {
             }
 
             if (queryUser !== null) {
-
+                connection.end();
                 res.json({ error: false, user: queryUser });
                 return;
             }
             else {
+                connection.end();
                 res.json({ error: true, message: 'user not found' });
                 return;
             }
@@ -239,10 +249,12 @@ app.get('/get-request-statuses', async (req, res) => {
             }
 
             if (queriedRequests !== null) {
+                connection.end();
                 res.json({ error: false, requests: queriedRequests });
                 return;
             }
             else {
+                connection.end();
                 res.json({ error: true, message: 'no requests found' });
                 return;
             }
@@ -270,10 +282,12 @@ app.get('/get-pending-requests', async (req, res) => {
             }
 
             if (queriedRequests !== null) {
+                connection.end();
                 res.json({ error: false, requests: queriedRequests });
                 return;
             }
             else {
+                connection.end();
                 res.json({ error: true, message: 'no requests found' });
                 return;
             }
@@ -303,10 +317,12 @@ app.get('/remove-service-by-id', async (req, res) => {
             }
 
             if (queriedRequests !== null && queriedRequests.affectedRows !== 0) {
+                connection.end();
                 res.json({ error: false });
                 return;
             }
             else {
+                connection.end();
                 res.json({ error: true });
                 return;
             }
@@ -335,10 +351,12 @@ app.get('/remove-service-by-categoryID', async (req, res) => {
             }
 
             if (queriedRequests !== null && queriedRequests.affectedRows !== 0) {
+                connection.end();
                 res.json({ error: false });
                 return;
             }
             else {
+                connection.end();
                 res.json({ error: true });
                 return;
             }
@@ -369,7 +387,7 @@ app.get('/remove-category', async (req, res) => {
 
         connection.query(`DELETE FROM category WHERE shopID='${shopID}' AND categoryID='${categoryID}'`, function (err, result, fields) {
         });
-
+        connection.end();
         res.json({ error: false });
 
 
@@ -398,7 +416,7 @@ app.get('/add-category', async (req, res) => {
             function (err, result, fields) {
             });
 
-
+        connection.end();
         res.json({ error: false });
 
 
@@ -429,7 +447,7 @@ app.get('/update-password', async (req, res) => {
             function (err, result, fields) {
             });
 
-
+        connection.end();
         res.json({ error: false });
 
 
@@ -457,7 +475,7 @@ app.get('/update-request-status', async (req, res) => {
             function (err, result, fields) {
             });
 
-
+        connection.end();
         res.json({ error: false });
 
 
@@ -484,7 +502,7 @@ app.get('/change-category-name', async (req, res) => {
             function (err, result, fields) {
             });
 
-
+        connection.end();
         res.json({ error: false });
 
 
@@ -516,6 +534,7 @@ app.get('/add-service', async (req, res) => {
             function (err, result, fields) {
             });
 
+        connection.end();
 
         res.json({ error: false });
 
@@ -545,7 +564,7 @@ app.get('/update-service', async (req, res) => {
             function (err, result, fields) {
             });
 
-
+        connection.end();
         res.json({ error: false });
 
 
@@ -575,6 +594,7 @@ app.get('/get-request-count', async (req, res) => {
             function (err, result, fields) {
                 let count = 0;
                 count = result[0]["COUNT(requestID)"];
+                connection.end();
                 res.json({ error: false, count });
                 return;
             });
@@ -620,7 +640,7 @@ app.get('/get-shop-statistics', async (req, res) => {
                         connection.query(`SELECT COUNT(serviceID) FROM service WHERE shopID="${shopID}"`,
                             function (err, result, fields) {
                                 serviceCount = result[0]["COUNT(serviceID)"];
-
+                                connection.end();
                                 res.json({ error: false, shopName, categoryCount, serviceCount });
                                 return;
                             });
@@ -648,6 +668,7 @@ app.get('/get-categories', async (req, res) => {
     connection.connect(function (err) {
         connection.query(`SELECT * FROM category WHERE shopID='${shopID}'`,
             function (err, result, fields) {
+                connection.end();
                 res.json({ error: false, result: result });
             });
     });
@@ -673,6 +694,7 @@ app.get('/get-services', async (req, res) => {
         // connection.query(`SELECT * FROM category LEFT JOIN service ON category.categoryID=service.categoryID WHERE category.categoryID='${categoryID}'`,
         connection.query(`SELECT * FROM service WHERE categoryID='${categoryID}'`,
             function (err, result, fields) {
+                connection.end();
                 res.json({ error: false, result: result });
             });
     });
@@ -709,7 +731,7 @@ app.get('/add-request', async (req, res) => {
             function (err, result, fields) {
             });
 
-
+        connection.end();
         res.json({ error: false });
 
 
@@ -753,7 +775,7 @@ app.get('/update-shop', async (req, res) => {
             function (err, result, fields) {
             });
 
-
+        connection.end();
         res.json({ error: false });
 
 
@@ -778,6 +800,7 @@ app.get('/get-request', async (req, res) => {
     connection.connect(function (err) {
         connection.query(`SELECT * FROM request  WHERE request.requestedBy='${requestedBy}'`,
             function (err, result, fields) {
+                connection.end();
                 res.json({ error: false, result: result });
             });
     });

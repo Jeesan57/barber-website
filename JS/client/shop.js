@@ -177,12 +177,13 @@ async function loadPage() {
             bookingButton.textContent = "book service";
 
             let bookingInput = document.createElement('input');
-            bookingInput.classList.add('booking-button');
-            bookingButton.placeholder = "book service";
+            bookingInput.classList.add('booking-input');
+            bookingInput.placeholder = "hh:mm dd/mm/yy";
+
 
 
             bookingButton.onclick = async () => {
-                console.log(services[0].serviceType);
+                console.log(services[0].serviceID);
             }
 
             serviceInformationDiv.appendChild(serviceTitle);
@@ -190,8 +191,9 @@ async function loadPage() {
             serviceInformationDiv.appendChild(servicePriceTitle);
             serviceInformationDiv.appendChild(servicePrice);
             serviceDiv.appendChild(serviceInformationDiv);
-            bookingBox.appendChild(bookingTitle)
-            bookingBox.appendChild(bookingButton)
+            bookingBox.appendChild(bookingTitle);
+            bookingBox.appendChild(bookingInput);
+            bookingBox.appendChild(bookingButton);
 
 
             serviceDiv.appendChild(bookingBox);

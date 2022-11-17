@@ -61,7 +61,11 @@ async function loadPage() {
     description.textContent = shop.shopDescription;
     contact.textContent = shop.contactInformation;
     workingHours.textContent = shop.workingHours;
+
+    
 }
+
+
 
 async function updateShop() {
     let shopID = getQueryParams()?.shopID;

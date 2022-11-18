@@ -154,7 +154,7 @@
     border-radius: 10px;
     cursor: pointer;
 }
-.save-chategory-button 
+.save-chategory-button , .save-service-button
 {
   margin-right: 10px;
 }

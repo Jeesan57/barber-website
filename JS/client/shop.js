@@ -281,11 +281,11 @@ async function loadPage() {
             let option4 = document.createElement('option');
             let option5 = document.createElement('option');
 
-            option1.textContent = "Rating: 1";
-            option2.textContent = "Rating: 2";
-            option3.textContent = "Rating: 3";
-            option4.textContent = "Rating: 4";
-            option5.textContent = "Rating: 5";
+            option1.textContent = services[j].review ? "Your rating: 1" : "select rating: 1";
+            option2.textContent = services[j].review ? "Your rating: 2" : "select rating: 2";
+            option3.textContent = services[j].review ? "Your rating: 3" : "select rating: 3";
+            option4.textContent = services[j].review ? "Your rating: 4" : "select rating: 4";
+            option5.textContent = services[j].review ? "Your rating: 5" : "select rating: 5";
 
             option1.value = "1";
             option2.value = "2";
@@ -299,6 +299,13 @@ async function loadPage() {
             ratingSelect.appendChild(option4);
             ratingSelect.appendChild(option5);
 
+            if (services[j].review) {
+                let fetchedRatingIndex = parseInt(services[j].review.rating) - 1;
+                ratingSelect.options.selectedIndex = fetchedRatingIndex;
+            }
+
+
+
 
 
 
@@ -307,7 +314,7 @@ async function loadPage() {
             let reviewInput = document.createElement('input');
             reviewInput.classList.add('booking-input');
             reviewInput.placeholder = "your review";
-            ratingSelect.setAttribute('id', `review-input-${services[j].serviceID}`)
+            reviewInput.setAttribute('id', `review-input-${services[j].serviceID}`)
             if (services[j].review) {
                 reviewInput.value = services[j].review.review;
             }
@@ -326,12 +333,26 @@ async function loadPage() {
 
 
 
-            // bookingButton.onclick = async () => {
-            //     let valueOfInput = document.getElementById(services[j].serviceID).value;
-            //     let userID = JSON.parse(localStorage['userID']);
-            //     await addBooking(shop.shopName, services[j].serviceType, userID, shop.shopID, valueOfInput);
-            //     location.reload();
-            // }
+            saveReviewButton.onclick = async () => {
+                let valueOfInput = document.getElementById(`review-input-${services[j].serviceID}`).value;
+                let ratingValue = document.getElementById(`review-select-${services[j].serviceID}`).value;
+
+                console.log(valueOfInput, ratingValue);
+                let userID = JSON.parse(localStorage['userID']);
+
+                let reviewID = userID + "_" + services[j].serviceID;
+                let serviceID = services[j].serviceID;
+
+                await fetch(`http://localhost:3000/upsert-review?reviewID=${reviewID}&userID=${userID}&serviceID=${serviceID}&review=${valueOfInput}&rating=${ratingValue}`, {
+                    method: 'GET',
+                    headers: {
+                        accept: 'application/json',
+                    },
+                });
+
+                location.reload();
+
+            }
 
 
 

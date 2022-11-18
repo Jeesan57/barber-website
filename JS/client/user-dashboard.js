@@ -60,6 +60,8 @@ async function populatePageWithShops(shops) {
 
 
     for (let i = 0; i < shops.length; i++) {
+
+        if (!shops[i].shopName) continue;
         // create shop div
         const shop = document.createElement('div');
         shop.classList.add('shop');
@@ -97,7 +99,9 @@ async function loadPage() {
 }
 
 async function filterShops() {
-    const search = document.getElementById('search').value;
+    const searchInput = document.getElementById('search-input');
+    let search = searchInput.value;
+
 
     if (!search || search === "") {
         loadPage();
@@ -108,6 +112,9 @@ async function filterShops() {
     let filtered = [];
 
     for (let i = 0; i < shops.length; i++) {
+
+        if (!shops[i].shopName) continue;
+
         if (shops[i].shopName.includes(search)) {
             filtered.push(shops[i]);
         }

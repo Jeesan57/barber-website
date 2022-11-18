@@ -167,3 +167,19 @@ body {
     cursor: pointer;
     margin: auto;
 }
+
+select {
+    border: none;
+    outline: none;
+    width: max-content;
+    height: 100%;
+    padding-left: 10px;
+    border-radius: 10px;
+
+    color: black;
+    cursor: pointer;
+
+    border: 1px solid var(--primary-color);
+    margin: auto;
+    margin-top: 20px;
+}

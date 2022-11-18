@@ -262,22 +262,62 @@ async function loadPage() {
             reviewBox.classList.add("booking-box");
 
             let reviewTitle = document.createElement('h3');
-            reviewTitle.textContent = "Your Review";
+            reviewTitle.textContent = "Review and rating: ";
 
+
+
+            // <select name="user-type" id="user-type">
+            //     <option value="1">Shop owner</option>
+            //     <option value="0">Client</option>
+            // </select>
+
+
+            let ratingSelect = document.createElement('select');
+            ratingSelect.setAttribute('id', `review-select-${services[j].serviceID}`)
+
+            let option1 = document.createElement('option');
+            let option2 = document.createElement('option');
+            let option3 = document.createElement('option');
+            let option4 = document.createElement('option');
+            let option5 = document.createElement('option');
+
+            option1.textContent = "Rating: 1";
+            option2.textContent = "Rating: 2";
+            option3.textContent = "Rating: 3";
+            option4.textContent = "Rating: 4";
+            option5.textContent = "Rating: 5";
+
+            option1.value = "1";
+            option2.value = "2";
+            option3.value = "3";
+            option4.value = "4";
+            option5.value = "5";
+
+            ratingSelect.appendChild(option1);
+            ratingSelect.appendChild(option2);
+            ratingSelect.appendChild(option3);
+            ratingSelect.appendChild(option4);
+            ratingSelect.appendChild(option5);
+
+
+
+
+
+
+            let reviewInput = document.createElement('input');
+            reviewInput.classList.add('booking-input');
+            reviewInput.placeholder = "your review";
+            ratingSelect.setAttribute('id', `review-input-${services[j].serviceID}`)
+            if (services[j].review) {
+                reviewInput.value = services[j].review.review;
+            }
 
             let saveReviewButton = document.createElement('button');
             saveReviewButton.classList.add('booking-button');
             saveReviewButton.textContent = "Save Review";
 
-            let reviewInput = document.createElement('input');
-            reviewInput.classList.add('booking-input');
-            reviewInput.placeholder = "your review";
-            if(services[j].review)
-            {
-                reviewInput.value = services[j].review.review;
-            }
-
             reviewBox.appendChild(reviewTitle);
+            reviewBox.appendChild(ratingSelect);
             reviewBox.appendChild(reviewInput);
             reviewBox.appendChild(saveReviewButton);
 

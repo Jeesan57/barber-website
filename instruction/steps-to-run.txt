@@ -15,4 +15,10 @@
     - to run the node express backend server, enter the following command in the cmd: (node .) and hit enter
         -your will see a message: "Example app listening on port 3000", it means everything is working fine.
 
-[5]
+[5] then you can just start with opening the index.html file as usual on any browser.
+
+
+comments: you discussed how you are going to run on internet explorer. some facts: internet explorer has been discontinued by microsoft (it's owing company).
+So, I suggest you to use something mordern like chrome/safari or firefox. But if you still want to use ie, 
+I'd suggest to atleast use microsoft edge instead of ie as this is what microsoft is pushing for instead of internet explorer.
+Thanks!

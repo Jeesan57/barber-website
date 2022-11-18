@@ -33,7 +33,7 @@ function getQueryParams() {
 
 
 // 
-async function addBooking(shopName, serviceType, requestedBy, requestedForShop,  requestTime) {
+async function addBooking(shopName, serviceType, requestedBy, requestedForShop, requestTime) {
     let requestID = getRandomString('BOOKING');
     let timestamp = Date.now();
 
@@ -214,16 +214,23 @@ async function loadPage() {
 
             bookingButton.onclick = async () => {
                 let valueOfInput = document.getElementById(services[j].serviceID).value;
-                let userID =  JSON.parse(localStorage['userID']);
+                let userID = JSON.parse(localStorage['userID']);
                 await addBooking(shop.shopName, services[j].serviceType, userID, shop.shopID, valueOfInput);
                 location.reload();
             }
+
+
+            let reviewLink = document.createElement('a');
+            reviewLink.textContent = "View Reviews";
+            reviewLink.classList.add('review');
+            reviewLink.href = (location.protocol + '//' + location.host + "/review-page.html?serviceID=") + services[j].serviceID;
 
             serviceInformationDiv.appendChild(serviceTitle);
             serviceInformationDiv.appendChild(serviceName);
             serviceInformationDiv.appendChild(servicePriceTitle);
             serviceInformationDiv.appendChild(servicePrice);
             serviceDiv.appendChild(serviceInformationDiv);
+            serviceDiv.appendChild(reviewLink);
             bookingBox.appendChild(bookingTitle);
             bookingBox.appendChild(bookingInput);
             bookingBox.appendChild(bookingButton);

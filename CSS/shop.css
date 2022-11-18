@@ -49,8 +49,7 @@ body {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.shop-information 
-{
+.shop-information {
     background-color: var(--secondary-color);
     width: 40vw;
     max-width: 40vw;
@@ -66,23 +65,23 @@ body {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
 }
-.info-box 
-{
+
+.info-box {
     width: 100%;
     margin-top: 10px;
 }
-.info-box h2{
+
+.info-box h2 {
     text-decoration: underline;
 }
 
-.chategories 
-{
+.chategories {
     width: max-content;
     margin: auto;
     color: #e7e7e7;
 }
 
-.chategory{
+.chategory {
     margin-top: 40px;
     margin-bottom: 15px;
 
@@ -93,15 +92,18 @@ body {
 
 }
 
-.chategory-info 
-{
+.chategory-info {
     min-width: 40vw;
     display: flex;
     justify-content: space-between;
 }
 
-.service 
+.service-information 
 {
+    margin-bottom: 10px;
+}
+
+.service {
     width: 80%;
     margin: auto;
     margin-top: 10px;
@@ -111,37 +113,33 @@ body {
     border-radius: 10px;
 }
 
-.service h3 
-{
+.service h3 {
     margin-top: 10px;
 }
 
-.booking-box 
-{
+.booking-box {
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
 }
 
-.booking-box h3 
-{
+.booking-box h3 {
     margin: 0;
 }
 
-.booking-input 
-{
+.booking-input {
     background-color: var(--secondary-color);
     color: #e7e7e7;
-  
+
     border: none;
     outline: none;
     border-radius: 10px;
     padding: 5px;
-  
+
     width: 24vw;
     height: 40px;
-  
+
     margin: auto;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -149,15 +147,21 @@ body {
     text-align: center;
 }
 
-.booking-button 
-{
+.review {
+    outline: none;
+    color: white;
+    text-decoration: underline;
+}
+
+
+.booking-button {
     width: max-content;
     background-color: var(--accent-color);
     color: white;
-  
+
     border: none;
     outline: none;
-  
+
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;

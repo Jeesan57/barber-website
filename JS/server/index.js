@@ -768,6 +768,28 @@ app.get('/get-services', async (req, res) => {
 })
 
 
+// http://localhost:3000/get-service?serviceID=1
+app.get('/get-service', async (req, res) => {
+
+    let serviceID = req.query.serviceID;
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    connection.connect(function (err) {
+        // connection.query(`SELECT * FROM category LEFT JOIN service ON category.categoryID=service.categoryID WHERE category.categoryID='${categoryID}'`,
+        connection.query(`SELECT * FROM service WHERE serviceID='${serviceID}'`,
+            function (err, result, fields) {
+                connection.end();
+                res.json({ error: false, result: result[0] });
+            });
+    });
+})
+
 
 //INSERT INTO `request` (`requestID`, `requestedBy`, `requestedForShop`, `status`, `requestTime`, `timestamp`) VALUES ('`12123', 'asd', 'sadas', '123123', '12312', '123123');
 

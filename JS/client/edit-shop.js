@@ -13,7 +13,7 @@ function getRandomString(key) {
 
     let strLen = 32;
     var characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    var result = ""
+    var result = "";
     var charactersLength = characters.length;
 
     for (var i = 0; i < strLen; i++) {

@@ -59,12 +59,55 @@ async function checkIfLoggedIn() {
 }
 
 
+async function getCategories(shopID) {
+
+    // get shop information
+    let response, data;
+    response = await fetch(`http://localhost:3000/get-categories?shopID=${shopID}`, {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+        },
+    });
+
+    data = await response.json();
+    return data.result;
+}
+
+async function getServices(categoryID) {
+    // get shop information
+    let response, data;
+    response = await fetch(`http://localhost:3000/get-services?categoryID=${categoryID}`, {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+        },
+    });
+
+    data = await response.json();
+    return data.result;
+}
+
+async function createCategoryStructure(shopID) {
+    const structure = [];
+    const categories = await getCategories(shopID);
+    for (const category of categories) {
+        const services = await getServices(category.categoryID);
+        category.services = services;
+        structure.push(category);
+    }
+
+    return structure;
+}
+
+
 
 async function loadPage() {
 
     checkIfLoggedIn();
     let shop = await getShop();
-    console.log(shop);
+    let structure = await createCategoryStructure(shop.shopID);
+
 
     let shopname = document.getElementById('shopname');
     let description = document.getElementById('description');
@@ -76,51 +119,108 @@ async function loadPage() {
     contact.textContent = shop.contactInformation;
     workingHours.textContent = shop.workingHours;
 
+
+
     const container = document.getElementById('container');
     // remove everything from container
-    // while (container.firstChild) {
-    //     container.removeChild(container.lastChild);
-    // }
+    while (container.firstChild) {
+        container.removeChild(container.lastChild);
+    }
 
 
-    const category = document.createElement('div');
-    const categoryInformation = document.createElement('div');
+    console.log(structure);
 
-    const info = document.createElement('div');
-    const categoryTitle = document.createElement('h3');
-    const categoryName = document.createElement('p');
-    categoryName.contentEditable = "true";
+    for (let i = 0; i < structure.length; i++) {
 
-    const save = document.createElement('button');
-    const remove = document.createElement('button');
-
-
-    categoryTitle.textContent = "Chategory Name: ";
-    categoryName.textContent = "dynamic texts";
-    save.textContent = "Save Category Name";
-    remove.textContent = "remove Category";
-
-
-
-
-    category.classList.add('chategory');
-    categoryInformation.classList.add('chategory-information');
-
-    info.classList.add('info-box');
-    categoryName.classList.add('chategory-current-name');
-    save.classList.add('save-chategory-button');
-    remove.classList.add('remove-chategory-button');
+        const category = document.createElement('div');
+        const categoryInformation = document.createElement('div');
+        const info = document.createElement('div');
+        const categoryTitle = document.createElement('h3');
+        const categoryName = document.createElement('p');
+        categoryName.contentEditable = "true";
+        const save = document.createElement('button');
+        const remove = document.createElement('button');
+        const serviceAdder = document.createElement('div');
+        const serviceType = document.createElement('input');
+        const servicePrice = document.createElement('input');
+        const addServiceButton = document.createElement('button');
+        const addIcon = document.createElement('i');
 
 
-    info.appendChild(categoryTitle);
-    info.appendChild(categoryName);
-    categoryInformation.appendChild(info);
+        categoryName.setAttribute('id', `category-name-${structure[i].categoryID}`);
 
-    categoryInformation.appendChild(save);
-    categoryInformation.appendChild(remove);
-    category.appendChild(categoryInformation);
 
-    container.appendChild(category);
+
+        remove.onclick = async () => {
+            let res = await fetch(`http://localhost:3000/remove-category?categoryID=${structure[i].categoryID}&shopID=${shop.shopID}`, {
+                method: 'GET',
+                headers: {
+                    accept: 'application/json',
+                },
+            });
+
+            let data = await res.json();
+            console.log(data);
+            location.reload();
+        }
+
+        save.onclick = async () => {
+            let categoryName = document.getElementById(`category-name-${structure[i].categoryID}`).textContent;
+
+            // 
+            await fetch(`http://localhost:3000/change-category-name?categoryID=${structure[i].categoryID}&categoryName=${categoryName}`, {
+                method: 'GET',
+                headers: {
+                    accept: 'application/json',
+                },
+            });
+            location.reload();
+        }
+
+
+
+
+
+        categoryTitle.textContent = "Chategory Name: ";
+        categoryName.textContent = `${structure[i].categoryName}`;
+        save.textContent = "Save Category Name";
+        remove.textContent = "remove Category";
+        serviceAdder.textContent = "remove Category";
+        serviceType.placeholder = "service name";
+        servicePrice.placeholder = "service price";
+        addServiceButton.textContent = "add service ";
+        category.classList.add('chategory');
+        categoryInformation.classList.add('chategory-information');
+        info.classList.add('info-box');
+        categoryName.classList.add('chategory-current-name');
+        save.classList.add('save-chategory-button');
+        remove.classList.add('remove-chategory-button');
+        serviceAdder.classList.add('service-adder-div');
+        serviceType.classList.add('service-info');
+        servicePrice.classList.add('service-info');
+        addServiceButton.classList.add('add-chategory-button')
+        addIcon.classList.add('fa-sharp');
+        addIcon.classList.add('fa-solid');
+        addIcon.classList.add(['fa-add']);
+
+
+
+
+        info.appendChild(categoryTitle);
+        info.appendChild(categoryName);
+        categoryInformation.appendChild(info);
+        categoryInformation.appendChild(save);
+        categoryInformation.appendChild(remove);
+        category.appendChild(categoryInformation);
+        serviceAdder.appendChild(serviceType);
+        serviceAdder.appendChild(servicePrice);
+        addServiceButton.appendChild(addIcon);
+        serviceAdder.appendChild(addServiceButton);
+        category.appendChild(serviceAdder);
+        container.appendChild(category);
+    }
+
+
 
 
     // <div class="chategory">

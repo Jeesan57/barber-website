@@ -50,7 +50,6 @@ async function getAppointments() {
     let shopID = getQueryParams()?.shopID;
     // get shop information
     let response, data;
-    console.log(`http://localhost:3000/get-accepted-requests?shopID=${shopID}`);
     response = await fetch(`http://localhost:3000/get-accepted-requests?shopID=${shopID}`, {
         method: 'GET',
         headers: {
@@ -94,7 +93,6 @@ async function loadPage() {
         let button = document.createElement('button');
         button.textContent = "Mark as done"
         button.classList.add('mark-as-done');
-        console.log(`http://localhost:3000/update-request-status?requestID=${appointments[i].requestID}&status=done`);
 
         button.onclick = async () => {
             let res = await fetch(`http://localhost:3000/update-request-status?requestID=${appointments[i].requestID}&status=done`, {

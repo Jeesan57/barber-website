@@ -7,7 +7,6 @@ async function changePage(userName, password) {
     });
 
     let data = await response.json();
-    console.log(data);
     if (data.error) {
         document.getElementById('error').style.display = "block";
         return;
@@ -37,7 +36,6 @@ function login() {
     let userName = document.querySelectorAll('input')[0].value;
     let password = document.querySelectorAll('input')[1].value;
 
-    console.log(userName, password);
     changePage(userName, password);
 }
 

@@ -128,7 +128,6 @@ async function loadPage() {
     }
 
 
-    console.log(structure);
 
     for (let i = 0; i < structure.length; i++) {
 
@@ -166,7 +165,6 @@ async function loadPage() {
             });
 
             let data = await res.json();
-            console.log(data);
             location.reload();
         }
 
@@ -431,7 +429,6 @@ async function updateShop() {
     let contact = document.getElementById('contact').value;
     let workingHours = document.getElementById('hours').value;
 
-    console.log(shopID, shopname, description, contact, workingHours);
 
     let response = await fetch(`http://localhost:3000/update-shop?shopID=${shopID}&shopName=${shopname}&shopDescription=${description}&contactInformation=${contact}&workingHours=${workingHours}`, {
         method: 'GET',
@@ -440,7 +437,6 @@ async function updateShop() {
         },
     });
     let data = await response.json();
-    console.log(data);
     // location.reload();
 }
 

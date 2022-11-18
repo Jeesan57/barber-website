@@ -43,7 +43,6 @@ async function getShopStatistics() {
 
 
     // accepted count
-    console.log(`http://localhost:3000/get-request-count?status=pending&shopID=${shopID}`);
     response = await fetch(`http://localhost:3000/get-request-count?status=pending&shopID=${shopID}`, {
         method: 'GET',
         headers: {
@@ -54,7 +53,6 @@ async function getShopStatistics() {
     data = await response.json();
     let pendingCount = data.count;
     result = { ...result, acceptedCount, pendingCount };
-    console.log(result);
 
 
     // http://localhost:3000/get-request-count?status=accepte&shopID=1232qe

@@ -150,7 +150,6 @@ async function loadPage() {
     // </div>
 
     let structure = await createCategoryStructure(shopID);
-    console.log(structure)
 
     for (let i = 0; i < structure.length; i++) {
         let category = structure[i];
@@ -216,8 +215,6 @@ async function loadPage() {
             bookingButton.onclick = async () => {
                 let valueOfInput = document.getElementById(services[j].serviceID).value;
                 let userID =  JSON.parse(localStorage['userID']);
-                console.log(valueOfInput);
-                console.log(services[j].serviceID);
                 await addBooking(shop.shopName, services[j].serviceType, userID, shop.shopID, valueOfInput);
                 location.reload();
             }

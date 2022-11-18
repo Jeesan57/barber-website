@@ -285,7 +285,7 @@ async function loadPage() {
             }
 
 
-            
+
             saveService.onclick = async () => {
 
                 let serviceID = services[j].serviceID;
@@ -326,6 +326,12 @@ async function loadPage() {
             currencyText.classList.add('currency-text');
 
 
+            let reviewLink = document.createElement('a');
+            reviewLink.textContent = "View Reviews";
+            reviewLink.classList.add('review');
+            reviewLink.href = (location.protocol + '//' + location.host + "/review-page.html?serviceID=") + services[j].serviceID;
+
+
 
 
 
@@ -346,6 +352,8 @@ async function loadPage() {
             buttonHolder.appendChild(saveService);
             buttonHolder.appendChild(removeService);
             service.appendChild(buttonHolder);
+
+            service.appendChild(reviewLink);
 
 
             category.appendChild(service);
@@ -429,6 +437,8 @@ async function updateShop() {
     let contact = document.getElementById('contact').value;
     let workingHours = document.getElementById('hours').value;
 
+    console.log(shopID, shopname, description, contact, workingHours);
+
 
     let response = await fetch(`http://localhost:3000/update-shop?shopID=${shopID}&shopName=${shopname}&shopDescription=${description}&contactInformation=${contact}&workingHours=${workingHours}`, {
         method: 'GET',
@@ -436,8 +446,10 @@ async function updateShop() {
             accept: 'application/json',
         },
     });
+
+    console.log(shopID, shopname, description, contact, workingHours);
     let data = await response.json();
-    // location.reload();
+    location.reload();
 }
 
 

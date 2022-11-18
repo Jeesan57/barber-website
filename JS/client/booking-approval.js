@@ -50,7 +50,7 @@ async function getAppointments() {
     let shopID = getQueryParams()?.shopID;
     // get shop information
     let response, data;
-    response = await fetch(`http://localhost:3000/get-accepted-requests?shopID=${shopID}`, {
+    response = await fetch(`http://localhost:3000/get-pending-requests?shopID=${shopID}`, {
         method: 'GET',
         headers: {
             accept: 'application/json',
@@ -83,19 +83,42 @@ async function loadPage() {
 
         let informationString = `Your have an appointment booked for "Service : ${appointments[i].serviceType}" Appointment Time: "${appointments[i].requestTime}"  in "Shop Name: ${appointments[i].shopName}"`;
 
+
+
+        // <div class="approval-box">
+        //     <p class="request-text">A user "Username" requested for "service name" for your shop "shopname" @at
+        //         "request
+        //         timestamp" </p>
+        //     <p class="timestamp">1/11/2021 5:50pm</p>
+        //     <div class="button-container">
+        //         <button class="accept">
+        //             <i class="fa-sharp fa-solid fa-check"></i>
+        //         </button>
+
+        //         <button class="deny">
+        //             <i class="fa-sharp fa-solid fa-xmark"></i>
+        //         </button>
+        //     </div>
+        // </div>
+
+
         let approvalBox = document.createElement('div');
         approvalBox.classList.add('approval-box');
 
         let requestText = document.createElement('p');
         requestText.classList.add('request-text');
 
+        let buttonContainer = document.createElement('div');
+        buttonContainer.classList.add('button-container');
 
-        let button = document.createElement('button');
-        button.textContent = "Mark as done"
-        button.classList.add('mark-as-done');
 
-        button.onclick = async () => {
-            let res = await fetch(`http://localhost:3000/update-request-status?requestID=${appointments[i].requestID}&status=done`, {
+
+        let accept = document.createElement('button');
+        accept.textContent = "accept"
+        accept.classList.add('accept');
+
+        accept.onclick = async () => {
+            let res = await fetch(`http://localhost:3000/update-request-status?requestID=${appointments[i].requestID}&status=accepted`, {
                 method: 'GET',
                 headers: {
                     accept: 'application/json',
@@ -107,9 +130,31 @@ async function loadPage() {
 
         }
 
+
+        let deny = document.createElement('button');
+        deny.textContent = "deny"
+        deny.classList.add('deny');
+
+        deny.onclick = async () => {
+            let res = await fetch(`http://localhost:3000/update-request-status?requestID=${appointments[i].requestID}&status=denied`, {
+                method: 'GET',
+                headers: {
+                    accept: 'application/json',
+                },
+            });
+
+            let data = await res.json();
+            location.reload();
+
+        }
+
+
         requestText.textContent = informationString
         approvalBox.appendChild(requestText);
-        approvalBox.appendChild(button);
+        buttonContainer.appendChild(accept);
+        buttonContainer.appendChild(deny);
+        approvalBox.appendChild(buttonContainer);
+
         container.appendChild(approvalBox);
     }
 

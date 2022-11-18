@@ -921,7 +921,7 @@ app.get('/get-reviews', async (req, res) => {
 
 
 // get review for reviewID
-// http://localhost:3000/get-reviews?reviewID=cut-hair
+// http://localhost:3000/get-review?reviewID=cut-hair
 app.get('/get-review', async (req, res) => {
 
     let reviewID = req.query.reviewID;

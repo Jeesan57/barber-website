@@ -104,8 +104,6 @@ async function loadPage() {
 
 
     let isOwner = JSON.parse(localStorage['isOwner']);
-
-
     let serviceID = getQueryParams()?.serviceID;
     let service = await getService(serviceID);
     if (!service) {

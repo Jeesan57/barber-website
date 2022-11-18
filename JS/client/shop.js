@@ -61,6 +61,21 @@ async function getCategories(shopID) {
     return data.result;
 }
 
+async function getReview(reviewID) {
+    // get shop information
+    let response, data;
+    response = await fetch(`http://localhost:3000/get-review?reviewID=${reviewID}`, {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+        },
+    });
+
+    data = await response.json();
+    return data.result;
+}
+
+
 async function getServices(categoryID) {
     // get shop information
     let response, data;
@@ -72,7 +87,20 @@ async function getServices(categoryID) {
     });
 
     data = await response.json();
-    return data.result;
+
+    let services = data.result;
+    var userID = JSON.parse(localStorage['userID']);
+
+
+    let result = [];
+
+    for (const service of services) {
+        const review = await getReview(`${userID}_${service.serviceID}`)
+        service.review = review;
+        result.push(service);
+    }
+    return result;
+
 }
 
 async function createCategoryStructure(shopID) {
@@ -150,6 +178,7 @@ async function loadPage() {
     // </div>
 
     let structure = await createCategoryStructure(shopID);
+    console.log(structure);
 
     for (let i = 0; i < structure.length; i++) {
         let category = structure[i];
@@ -225,6 +254,51 @@ async function loadPage() {
             reviewLink.classList.add('review');
             reviewLink.href = (location.protocol + '//' + location.host + "/review-page.html?serviceID=") + services[j].serviceID;
 
+
+
+            //
+
+            let reviewBox = document.createElement('div');
+            reviewBox.classList.add("booking-box");
+
+            let reviewTitle = document.createElement('h3');
+            reviewTitle.textContent = "Your Review";
+
+
+            let saveReviewButton = document.createElement('button');
+            saveReviewButton.classList.add('booking-button');
+            saveReviewButton.textContent = "Save Review";
+
+            let reviewInput = document.createElement('input');
+            reviewInput.classList.add('booking-input');
+            reviewInput.placeholder = "your review";
+            if(services[j].review)
+            {
+                reviewInput.value = services[j].review.review;
+            }
+
+            reviewBox.appendChild(reviewTitle);
+            reviewBox.appendChild(reviewInput);
+            reviewBox.appendChild(saveReviewButton);
+
+
+            // bookingInput.setAttribute('id', `${services[j].serviceID}`);
+
+
+
+            // bookingButton.onclick = async () => {
+            //     let valueOfInput = document.getElementById(services[j].serviceID).value;
+            //     let userID = JSON.parse(localStorage['userID']);
+            //     await addBooking(shop.shopName, services[j].serviceType, userID, shop.shopID, valueOfInput);
+            //     location.reload();
+            // }
+
+
+
+
+
+            //
+
             serviceInformationDiv.appendChild(serviceTitle);
             serviceInformationDiv.appendChild(serviceName);
             serviceInformationDiv.appendChild(servicePriceTitle);
@@ -237,6 +311,8 @@ async function loadPage() {
 
 
             serviceDiv.appendChild(bookingBox);
+            serviceDiv.appendChild(reviewBox);
+
             categoryDiv.appendChild(serviceDiv);
         }
 

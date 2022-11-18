@@ -294,6 +294,40 @@ app.get('/get-pending-requests', async (req, res) => {
 })
 
 
+// http://localhost:3000/get-accepted-requests?shopID=Jeeshan
+app.get('/get-accepted-requests', async (req, res) => {
+
+    let shopID = req.query.shopID;
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    let queriedRequests = null;
+    connection.connect(function (err) {
+        connection.query(`SELECT * FROM request WHERE status='accepted' AND requestedForShop='${shopID}'`, function (err, result, fields) {
+            if (result && result.length !== 0) {
+                queriedRequests = result;
+            }
+
+            if (queriedRequests !== null) {
+                connection.end();
+                res.json({ error: false, requests: queriedRequests });
+                return;
+            }
+            else {
+                connection.end();
+                res.json({ error: true, requests: [], message: 'no requests found' });
+                return;
+            }
+        });
+    });
+})
+
+
 // http://localhost:3000/get-requests?userID=Jeeshan
 app.get('/get-requests', async (req, res) => {
 

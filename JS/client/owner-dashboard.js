@@ -26,8 +26,10 @@ async function getShopStatistics() {
     data = await response.json();
     result = { ...result, ...data };
 
+    let shopID = data.shopID;
+
     // accepted count
-    response = await fetch(` http://localhost:3000/get-request-count?status=accepted&shopID=${data.shopID}`, {
+    response = await fetch(`http://localhost:3000/get-request-count?status=accepted&shopID=${shopID}`, {
         method: 'GET',
         headers: {
             accept: 'application/json',
@@ -41,7 +43,8 @@ async function getShopStatistics() {
 
 
     // accepted count
-    response = await fetch(` http://localhost:3000/get-request-count?status=pending&shopID=${data.shopID}`, {
+    console.log(`http://localhost:3000/get-request-count?status=pending&shopID=${shopID}`);
+    response = await fetch(`http://localhost:3000/get-request-count?status=pending&shopID=${shopID}`, {
         method: 'GET',
         headers: {
             accept: 'application/json',
@@ -51,6 +54,7 @@ async function getShopStatistics() {
     data = await response.json();
     let pendingCount = data.count;
     result = { ...result, acceptedCount, pendingCount };
+    console.log(result);
 
 
     // http://localhost:3000/get-request-count?status=accepte&shopID=1232qe

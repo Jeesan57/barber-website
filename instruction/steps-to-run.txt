@@ -1,0 +1,18 @@
+[0] unzip & save the folder downloaded from provided github link 
+
+[1] make sure you have the latest version of XAAMP installed on your device
+
+[2] start mysql server on XAAMP, create a database exactly named "barbar_shop" 
+    - then use the SQL commands from the init.sql file, that is located on the following location "./SQL/init.sql" in the XAAMP SQL tab
+        - some necessary tables will be created and then you can use the database
+
+[3] make sure you download a stable version of node js, here is a link where you can download it: https://nodejs.org/en/download/
+
+[4] provided you are using windows: open the folder with the command prompt
+    - navigate to the server folder using cmd cd command: (cd ./JS/server) then hit enter
+    - then enter the following command to install relevant packages, command: (npm install)
+        - some files will start to download that are necessary to run the backend
+    - to run the node express backend server, enter the following command in the cmd: (node .) and hit enter
+        -your will see a message: "Example app listening on port 3000", it means everything is working fine.
+
+[5]

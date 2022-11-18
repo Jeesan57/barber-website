@@ -1,13 +1,19 @@
 function checkIfLoggedIn() {
     var storedID = JSON.parse(localStorage['userID']);
-    if (!storedID)
-        document.location.href = (location.protocol + '//' + location.host + "/index.html");
+    if (!storedID) {
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+        document.location.href = (baseURL + "/index.html");
+
+    }
 }
 
 function logout() {
     localStorage['userID'] = JSON.stringify(null);
     localStorage['isOwner'] = JSON.stringify(null);
-    document.location.href = (location.protocol + '//' + location.host + "/index.html");
+    const url = window.location.pathname;
+    const baseURL = url.slice(0, url.lastIndexOf('/'));
+    document.location.href = (baseURL + "/index.html");
 }
 
 async function getUser() {
@@ -78,7 +84,7 @@ async function populatePageWithShops(shops) {
         const view = document.createElement('a');
         view.classList.add('view');
         view.textContent = "View Shop";
-        view.href = `/shop.html?shopID=${shops[i].shopID}`;
+        view.href = `./shop.html?shopID=${shops[i].shopID}`;
 
         prompt.appendChild(info);
         shop.appendChild(prompt);

@@ -1,7 +1,12 @@
 function checkIfLoggedIn() {
     var storedID = JSON.parse(localStorage['userID']);
-    if (!storedID)
-        document.location.href = (location.protocol + '//' + location.host + "/index.html");
+    if (!storedID) {
+
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+        document.location.href = (baseURL + "/index.html");
+    }
+
 }
 
 function getQueryParams() {
@@ -107,10 +112,17 @@ async function loadPage() {
     let serviceID = getQueryParams()?.serviceID;
     let service = await getService(serviceID);
     if (!service) {
-        if (isOwner == 1)
-            document.location.href = (location.protocol + '//' + location.host + "/owner-dashboard.html");
-        else
-            document.location.href = (location.protocol + '//' + location.host + "/user-dashboard.html");
+        if (isOwner == 1) {
+
+            const url = window.location.pathname;
+            const baseURL = url.slice(0, url.lastIndexOf('/'));
+            document.location.href = (baseURL + "/owner-dashboard.html");
+        }
+        else {
+            const url = window.location.pathname;
+            const baseURL = url.slice(0, url.lastIndexOf('/'));
+            document.location.href = (baseURL + "/user-dashboard.html");
+        }
     }
 
     let link = document.getElementById('dashboard');

@@ -38,7 +38,9 @@ async function getShop() {
 
     data = await response.json();
     if (data.error) {
-        document.location.href = (location.protocol + '//' + location.host + "/owner-dashboard.html");
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+        document.location.href = (baseURL + "/owner-dashboard.html");
         return;
     }
     let shop = data.shop;
@@ -47,12 +49,18 @@ async function getShop() {
 
 async function checkIfLoggedIn() {
     var storedID = JSON.parse(localStorage['userID']);
-    if (!storedID)
-        document.location.href = (location.protocol + '//' + location.host + "/index.html");
+    if (!storedID) {
+
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+        document.location.href = (baseURL + "/index.html");
+    }
 
     let shop = await getShop();
     if (storedID !== shop.ownerID) {
-        document.location.href = (location.protocol + '//' + location.host + "/owner-dashboard.html");
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+        document.location.href = (baseURL + "/owner-dashboard.html");
     }
 
     return shop;
@@ -329,7 +337,12 @@ async function loadPage() {
             let reviewLink = document.createElement('a');
             reviewLink.textContent = "View Reviews";
             reviewLink.classList.add('review');
-            reviewLink.href = (location.protocol + '//' + location.host + "/review-page.html?serviceID=") + services[j].serviceID;
+            
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+       
+
+            reviewLink.href =  "./review-page.html?serviceID=" + services[j].serviceID;
 
 
 

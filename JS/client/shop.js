@@ -15,8 +15,11 @@ function getRandomString(key) {
 
 function checkIfLoggedIn() {
     var storedID = JSON.parse(localStorage['userID']);
-    if (!storedID)
-        document.location.href = (location.protocol + '//' + location.host + "/index.html");
+    if (!storedID) {
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+        document.location.href = (baseURL + "/index.html");
+    }
 }
 
 function getQueryParams() {
@@ -121,7 +124,9 @@ async function loadPage() {
     // get shopID
     let shopID = getQueryParams()?.shopID;
     if (!shopID) {
-        document.location.href = (location.protocol + '//' + location.host + "/user-dashboard.html");
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+        document.location.href = (baseURL + "/user-dashboard.html");
     }
 
     // get shop information
@@ -135,7 +140,9 @@ async function loadPage() {
 
     data = await response.json();
     if (data.error) {
-        document.location.href = (location.protocol + '//' + location.host + "/user-dashboard.html");
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+        document.location.href = (baseURL + "/user-dashboard.html");
         return;
     }
     let shop = data.shop;
@@ -252,7 +259,7 @@ async function loadPage() {
             let reviewLink = document.createElement('a');
             reviewLink.textContent = "View Reviews";
             reviewLink.classList.add('review');
-            reviewLink.href = (location.protocol + '//' + location.host + "/review-page.html?serviceID=") + services[j].serviceID;
+            reviewLink.href = "./review-page.html?serviceID=" + services[j].serviceID;
 
 
 

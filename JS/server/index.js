@@ -260,10 +260,10 @@ app.get('/get-request-statuses', async (req, res) => {
     });
 })
 
-// http://localhost:3000/get-pending-requests?userID=Jeeshan
+// http://localhost:3000/get-pending-requests?shopID=Jeeshan
 app.get('/get-pending-requests', async (req, res) => {
 
-    let userID = req.query.userID;
+    let shopID = req.query.shopID;
 
     let connection = mysql.createConnection({
         host: "localhost",
@@ -274,7 +274,7 @@ app.get('/get-pending-requests', async (req, res) => {
 
     let queriedRequests = null;
     connection.connect(function (err) {
-        connection.query(`SELECT * FROM request WHERE status='pending' AND requestedBy='${userID}'`, function (err, result, fields) {
+        connection.query(`SELECT * FROM request WHERE status='pending' AND requestedForShop='${shopID}'`, function (err, result, fields) {
             if (result && result.length !== 0) {
                 queriedRequests = result;
             }
@@ -286,7 +286,41 @@ app.get('/get-pending-requests', async (req, res) => {
             }
             else {
                 connection.end();
-                res.json({ error: true, message: 'no requests found' });
+                res.json({ error: true, requests: [], message: 'no requests found' });
+                return;
+            }
+        });
+    });
+})
+
+
+// http://localhost:3000/get-accepted-requests?shopID=Jeeshan
+app.get('/get-accepted-requests', async (req, res) => {
+
+    let shopID = req.query.shopID;
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    let queriedRequests = null;
+    connection.connect(function (err) {
+        connection.query(`SELECT * FROM request WHERE status='accepted' AND requestedForShop='${shopID}'`, function (err, result, fields) {
+            if (result && result.length !== 0) {
+                queriedRequests = result;
+            }
+
+            if (queriedRequests !== null) {
+                connection.end();
+                res.json({ error: false, requests: queriedRequests });
+                return;
+            }
+            else {
+                connection.end();
+                res.json({ error: true, requests: [], message: 'no requests found' });
                 return;
             }
         });
@@ -734,6 +768,28 @@ app.get('/get-services', async (req, res) => {
 })
 
 
+// http://localhost:3000/get-service?serviceID=1
+app.get('/get-service', async (req, res) => {
+
+    let serviceID = req.query.serviceID;
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+    connection.connect(function (err) {
+        // connection.query(`SELECT * FROM category LEFT JOIN service ON category.categoryID=service.categoryID WHERE category.categoryID='${categoryID}'`,
+        connection.query(`SELECT * FROM service WHERE serviceID='${serviceID}'`,
+            function (err, result, fields) {
+                connection.end();
+                res.json({ error: false, result: result[0] });
+            });
+    });
+})
+
 
 //INSERT INTO `request` (`requestID`, `requestedBy`, `requestedForShop`, `status`, `requestTime`, `timestamp`) VALUES ('`12123', 'asd', 'sadas', '123123', '12312', '123123');
 
@@ -838,6 +894,101 @@ app.get('/get-request', async (req, res) => {
             });
     });
 })
+
+
+// get all reviews for serviceID
+// http://localhost:3000/get-reviews?serviceID=cut-hair
+app.get('/get-reviews', async (req, res) => {
+
+    let serviceID = req.query.serviceID;
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+
+    connection.connect(function (err) {
+        connection.query(`SELECT * FROM reviews  WHERE serviceID='${serviceID}'`,
+            function (err, result, fields) {
+                connection.end();
+                res.json({ error: false, result: result });
+            });
+    });
+})
+
+
+// get review for reviewID
+// http://localhost:3000/get-review?reviewID=cut-hair
+app.get('/get-review', async (req, res) => {
+
+    let reviewID = req.query.reviewID;
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+
+    connection.connect(function (err) {
+        connection.query(`SELECT * FROM reviews  WHERE reviewID='${reviewID}'`,
+            function (err, result, fields) {
+                connection.end();
+                res.json({ error: false, result: result[0] });
+            });
+    });
+})
+
+// upsert review : reviewID, userID, serviceID, review, rating
+// http://localhost:3000/upsert-review?reviewID=123&userID=cut-hair&serviceID=cut-hair&review=cut-hair&rating=5
+app.get('/upsert-review', async (req, res) => {
+
+    let reviewID = req.query.reviewID;
+    let userID = req.query.userID;
+    let serviceID = req.query.serviceID;
+    let reviewText = req.query.review;
+    let rating = req.query.rating;
+
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "barbar_shop"
+    });
+
+
+    connection.connect(function (err) {
+        connection.query(`SELECT * FROM reviews  WHERE reviewID='${reviewID}'`,
+            function (err, result, fields) {
+
+                let review = result[0];
+
+                if (review) // update 
+                {
+
+                    connection.query(`UPDATE reviews SET review='${reviewText}', rating='${rating}' WHERE reviewID='${reviewID}'`,
+                        function (err, result, fields) {
+                            connection.end();
+                            res.json({ error: false, result: result[0] });
+                        });
+                }
+                else // insert
+                {
+                    connection.query(`INSERT INTO reviews (reviewID, userID, serviceID, review, rating) VALUES ('${reviewID}', '${userID}', '${serviceID}', '${reviewText}', '${rating}');`,
+                        function (err, result, fields) {
+                            connection.end();
+                            res.json({ error: false, result: result[0] });
+                        });
+                }
+            });
+    });
+})
+
 
 
 

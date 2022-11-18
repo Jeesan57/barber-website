@@ -1,13 +1,19 @@
 function checkIfLoggedIn() {
     var storedID = JSON.parse(localStorage['userID']);
-    if (!storedID)
-        document.location.href = (location.protocol + '//' + location.host + "/index.html");
+    if (!storedID) {
+
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+        document.location.href = (baseURL + "/index.html");
+    }
 }
 
 function logout() {
     localStorage['userID'] = JSON.stringify(null);
     localStorage['isOwner'] = JSON.stringify(null);
-    document.location.href = (location.protocol + '//' + location.host + "/index.html");
+    const url = window.location.pathname;
+    const baseURL = url.slice(0, url.lastIndexOf('/'));
+    document.location.href = (baseURL + "/index.html");
 }
 
 async function getShopStatistics() {
@@ -26,8 +32,10 @@ async function getShopStatistics() {
     data = await response.json();
     result = { ...result, ...data };
 
+    let shopID = data.shopID;
+
     // accepted count
-    response = await fetch(` http://localhost:3000/get-request-count?status=accepted&shopID=${data.shopID}`, {
+    response = await fetch(`http://localhost:3000/get-request-count?status=accepted&shopID=${shopID}`, {
         method: 'GET',
         headers: {
             accept: 'application/json',
@@ -41,7 +49,7 @@ async function getShopStatistics() {
 
 
     // accepted count
-    response = await fetch(` http://localhost:3000/get-request-count?status=pending&shopID=${data.shopID}`, {
+    response = await fetch(`http://localhost:3000/get-request-count?status=pending&shopID=${shopID}`, {
         method: 'GET',
         headers: {
             accept: 'application/json',
@@ -101,16 +109,22 @@ async function loadPage() {
 
 
     approvalButton.onclick = () => {
-        document.location.href = (location.protocol + '//' + location.host + "/booking-approval.html?shopID=" + statistics.shopID);
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+        document.location.href = (baseURL + "/booking-approval.html?shopID=" + statistics.shopID);
     }
 
     appointmentButton.onclick = () => {
-        document.location.href = (location.protocol + '//' + location.host + "/services-schedule.html?shopID=" + statistics.shopID);
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+        document.location.href = (baseURL + "/services-schedule.html?shopID=" + statistics.shopID);
     }
 
 
     changeButton.onclick = () => {
-        document.location.href = (location.protocol + '//' + location.host + "/edit-shop.html?shopID=" + statistics.shopID);
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+        document.location.href = (baseURL + "/edit-shop.html?shopID=" + statistics.shopID);
     }
 
 

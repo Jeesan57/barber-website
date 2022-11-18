@@ -1,7 +1,10 @@
 function checkIfLoggedIn() {
     var storedID = JSON.parse(localStorage['userID']);
-    if (!storedID)
-        document.location.href = (location.protocol + '//' + location.host + "/index.html");
+    if (!storedID) {
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+        document.location.href = (baseURL + "/index.html");
+    }
 }
 
 async function getUser() {
@@ -24,26 +27,30 @@ async function loadPage() {
 
     let user = await getUser();
     let username = document.getElementById('username');
-    if(user) username.textContent = user.userName;
+    if (user) username.textContent = user.userName;
     let link = document.getElementById('dashboard-link');
-    if(user.isOwner == 1)
-    {
-        link.href = (location.protocol + '//' + location.host + "/owner-dashboard.html");
+    if (user.isOwner == 1) {
+
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+        document.location.href = (baseURL + "/owner-dashboard.html");
     }
     else {
-        link.href = (location.protocol + '//' + location.host + "/user-dashboard.html");
-    }   
 
- 
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+        document.location.href = (baseURL + "/user-dashboard.html");
+    }
+
+
 
 }
 
-async function changePassword()
-{
+async function changePassword() {
 
     let value1 = document.getElementById('input-1').value;
     let value2 = document.getElementById('input-2').value;
-    if(value1 !== value2) return;
+    if (value1 !== value2) return;
 
     let userID = JSON.parse(localStorage['userID']);
     let password = value1;

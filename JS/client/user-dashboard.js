@@ -1,13 +1,19 @@
 function checkIfLoggedIn() {
     var storedID = JSON.parse(localStorage['userID']);
-    if (!storedID)
-        document.location.href = (location.protocol + '//' + location.host + "/index.html");
+    if (!storedID) {
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+        document.location.href = (baseURL + "/index.html");
+
+    }
 }
 
 function logout() {
     localStorage['userID'] = JSON.stringify(null);
     localStorage['isOwner'] = JSON.stringify(null);
-    document.location.href = (location.protocol + '//' + location.host + "/index.html");
+    const url = window.location.pathname;
+    const baseURL = url.slice(0, url.lastIndexOf('/'));
+    document.location.href = (baseURL + "/index.html");
 }
 
 async function getUser() {
@@ -60,6 +66,8 @@ async function populatePageWithShops(shops) {
 
 
     for (let i = 0; i < shops.length; i++) {
+
+        if (!shops[i].shopName) continue;
         // create shop div
         const shop = document.createElement('div');
         shop.classList.add('shop');
@@ -76,7 +84,7 @@ async function populatePageWithShops(shops) {
         const view = document.createElement('a');
         view.classList.add('view');
         view.textContent = "View Shop";
-        view.href = `/shop.html?shopID=${shops[i].shopID}`;
+        view.href = `./shop.html?shopID=${shops[i].shopID}`;
 
         prompt.appendChild(info);
         shop.appendChild(prompt);
@@ -97,7 +105,9 @@ async function loadPage() {
 }
 
 async function filterShops() {
-    const search = document.getElementById('search').value;
+    const searchInput = document.getElementById('search-input');
+    let search = searchInput.value;
+
 
     if (!search || search === "") {
         loadPage();
@@ -108,6 +118,9 @@ async function filterShops() {
     let filtered = [];
 
     for (let i = 0; i < shops.length; i++) {
+
+        if (!shops[i].shopName) continue;
+
         if (shops[i].shopName.includes(search)) {
             filtered.push(shops[i]);
         }

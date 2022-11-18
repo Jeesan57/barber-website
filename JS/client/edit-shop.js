@@ -13,7 +13,7 @@ function getRandomString(key) {
 
     let strLen = 32;
     var characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    var result = ""
+    var result = "";
     var charactersLength = characters.length;
 
     for (var i = 0; i < strLen; i++) {
@@ -38,7 +38,9 @@ async function getShop() {
 
     data = await response.json();
     if (data.error) {
-        document.location.href = (location.protocol + '//' + location.host + "/owner-dashboard.html");
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+        document.location.href = (baseURL + "/owner-dashboard.html");
         return;
     }
     let shop = data.shop;
@@ -47,12 +49,18 @@ async function getShop() {
 
 async function checkIfLoggedIn() {
     var storedID = JSON.parse(localStorage['userID']);
-    if (!storedID)
-        document.location.href = (location.protocol + '//' + location.host + "/index.html");
+    if (!storedID) {
+
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+        document.location.href = (baseURL + "/index.html");
+    }
 
     let shop = await getShop();
     if (storedID !== shop.ownerID) {
-        document.location.href = (location.protocol + '//' + location.host + "/owner-dashboard.html");
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+        document.location.href = (baseURL + "/owner-dashboard.html");
     }
 
     return shop;
@@ -114,10 +122,10 @@ async function loadPage() {
     let contact = document.getElementById('contact');
     let workingHours = document.getElementById('hours');
 
-    shopname.textContent = shop.shopName;
-    description.textContent = shop.shopDescription;
-    contact.textContent = shop.contactInformation;
-    workingHours.textContent = shop.workingHours;
+    shopname.value = shop.shopName;
+    description.value = shop.shopDescription;
+    contact.value = shop.contactInformation;
+    workingHours.value = shop.workingHours;
 
 
 
@@ -128,7 +136,6 @@ async function loadPage() {
     }
 
 
-    console.log(structure);
 
     for (let i = 0; i < structure.length; i++) {
 
@@ -147,7 +154,13 @@ async function loadPage() {
         const addIcon = document.createElement('i');
 
 
+
+
+
         categoryName.setAttribute('id', `category-name-${structure[i].categoryID}`);
+        serviceType.setAttribute('id', `service-type-${structure[i].categoryID}`);
+        servicePrice.setAttribute('id', `service-price-${structure[i].categoryID}`);
+
 
 
 
@@ -160,7 +173,6 @@ async function loadPage() {
             });
 
             let data = await res.json();
-            console.log(data);
             location.reload();
         }
 
@@ -178,6 +190,22 @@ async function loadPage() {
         }
 
 
+        addServiceButton.onclick = async () => {
+            let serviceID = getRandomString("SERVICE");
+            let serviceType = document.getElementById(`service-type-${structure[i].categoryID}`).value;
+            let servicePrice = document.getElementById(`service-price-${structure[i].categoryID}`).value;
+            let shopID = shop.shopID;
+
+            // 
+            await fetch(`http://localhost:3000/add-service?serviceID=${serviceID}&serviceType=${serviceType}&price=${servicePrice}&categoryID=${structure[i].categoryID}&shopID=${shopID}`, {
+                method: 'GET',
+                headers: {
+                    accept: 'application/json',
+                },
+            });
+            location.reload();
+        }
+
 
 
 
@@ -185,7 +213,7 @@ async function loadPage() {
         categoryName.textContent = `${structure[i].categoryName}`;
         save.textContent = "Save Category Name";
         remove.textContent = "remove Category";
-        serviceAdder.textContent = "remove Category";
+        serviceAdder.textContent = "Add a service";
         serviceType.placeholder = "service name";
         servicePrice.placeholder = "service price";
         addServiceButton.textContent = "add service ";
@@ -204,8 +232,6 @@ async function loadPage() {
         addIcon.classList.add(['fa-add']);
 
 
-
-
         info.appendChild(categoryTitle);
         info.appendChild(categoryName);
         categoryInformation.appendChild(info);
@@ -217,6 +243,153 @@ async function loadPage() {
         addServiceButton.appendChild(addIcon);
         serviceAdder.appendChild(addServiceButton);
         category.appendChild(serviceAdder);
+
+        let services = structure[i].services;
+        for (let j = 0; j < services.length; j++) {
+
+            let service = document.createElement('div');
+            service.classList.add('service');
+
+            let serviceInfo = document.createElement('div');
+            serviceInfo.classList.add('service-information');
+
+            let infoBox1 = document.createElement('div');
+            let infoBox2 = document.createElement('div');
+            infoBox1.classList.add('info-box');
+            infoBox2.classList.add('info-box');
+
+
+            let serviceTitle = document.createElement('h3');
+            serviceTitle.textContent = "Service Name: ";
+
+            let priceTitle = document.createElement('h3');
+            priceTitle.textContent = "Service price: ";
+
+            let serviceName = document.createElement('p');
+            let servicePrice = document.createElement('p');
+            let currencyText = document.createElement('p');
+
+            let buttonHolder = document.createElement('div');
+            let saveService = document.createElement('button');
+            let removeService = document.createElement('button');
+
+            saveService.textContent = "Save Changes";
+            removeService.textContent = "Remove Service";
+
+            saveService.classList.add('save-service-button');
+            removeService.classList.add('remove-service-button');
+
+
+            removeService.onclick = async () => {
+
+                let serviceID = services[j].serviceID;
+                await fetch(`http://localhost:3000/remove-service-by-id?serviceID=${serviceID}`, {
+                    method: 'GET',
+                    headers: {
+                        accept: 'application/json',
+                    },
+                });
+                location.reload();
+            }
+
+
+
+            saveService.onclick = async () => {
+
+                let serviceID = services[j].serviceID;
+
+                let serviceNameText = document.getElementById(`service-name-${services[j].serviceID}`).textContent;
+                let servicePriceText = document.getElementById(`service-price-${services[j].serviceID}`).textContent;
+
+
+
+                await fetch(`http://localhost:3000/update-service?serviceID=${serviceID}&serviceType=${serviceNameText}&price=${servicePriceText}`, {
+                    method: 'GET',
+                    headers: {
+                        accept: 'application/json',
+                    },
+                });
+                location.reload();
+            }
+
+
+
+
+
+            serviceName.textContent = services[j].serviceType;
+            servicePrice.textContent = services[j].price;
+
+
+
+            serviceName.contentEditable = "true";
+            serviceName.setAttribute('id', `service-name-${services[j].serviceID}`);
+
+            servicePrice.contentEditable = "true";
+            servicePrice.setAttribute('id', `service-price-${services[j].serviceID}`);
+
+            currencyText.textContent = '$';
+
+            serviceName.classList.add('service-name');
+            servicePrice.classList.add('service-price');
+            currencyText.classList.add('currency-text');
+
+
+            let reviewLink = document.createElement('a');
+            reviewLink.textContent = "View Reviews";
+            reviewLink.classList.add('review');
+            
+        const url = window.location.pathname;
+        const baseURL = url.slice(0, url.lastIndexOf('/'));
+       
+
+            reviewLink.href =  "./review-page.html?serviceID=" + services[j].serviceID;
+
+
+
+
+
+            infoBox1.appendChild(serviceTitle);
+            infoBox1.appendChild(serviceName);
+
+            infoBox2.appendChild(priceTitle);
+            infoBox2.appendChild(servicePrice);
+            infoBox2.appendChild(currencyText);
+
+
+
+            serviceInfo.appendChild(infoBox1);
+            serviceInfo.appendChild(infoBox2);
+
+            service.appendChild(serviceInfo);
+
+            buttonHolder.appendChild(saveService);
+            buttonHolder.appendChild(removeService);
+            service.appendChild(buttonHolder);
+
+            service.appendChild(reviewLink);
+
+
+            category.appendChild(service);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+
         container.appendChild(category);
     }
 
@@ -272,10 +445,13 @@ async function loadPage() {
 
 async function updateShop() {
     let shopID = getQueryParams()?.shopID;
-    let shopname = document.getElementById('shopname').textContent;
-    let description = document.getElementById('description').textContent;
-    let contact = document.getElementById('contact').textContent;
-    let workingHours = document.getElementById('hours').textContent;
+    let shopname = document.getElementById('shopname').value;
+    let description = document.getElementById('description').value;
+    let contact = document.getElementById('contact').value;
+    let workingHours = document.getElementById('hours').value;
+
+    console.log(shopID, shopname, description, contact, workingHours);
+
 
     let response = await fetch(`http://localhost:3000/update-shop?shopID=${shopID}&shopName=${shopname}&shopDescription=${description}&contactInformation=${contact}&workingHours=${workingHours}`, {
         method: 'GET',
@@ -283,6 +459,8 @@ async function updateShop() {
             accept: 'application/json',
         },
     });
+
+    console.log(shopID, shopname, description, contact, workingHours);
     let data = await response.json();
     location.reload();
 }

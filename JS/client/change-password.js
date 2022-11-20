@@ -33,15 +33,14 @@ async function loadPage() {
 
         const url = window.location.pathname;
         const baseURL = url.slice(0, url.lastIndexOf('/'));
-        document.location.href = (baseURL + "/owner-dashboard.html");
+        link.href = (baseURL + "/owner-dashboard.html");
     }
     else {
 
         const url = window.location.pathname;
         const baseURL = url.slice(0, url.lastIndexOf('/'));
-        document.location.href = (baseURL + "/user-dashboard.html");
+        link.href = (baseURL + "/user-dashboard.html");
     }
-
 
 
 }
@@ -66,6 +65,6 @@ async function changePassword() {
     location.reload();
 
 
-
 }
+
 loadPage();

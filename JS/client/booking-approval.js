@@ -85,7 +85,6 @@ async function loadPage() {
     }
 
 
-
     let informationArray = [];
     for (let i = 0; i < appointments.length; i++) {
 
@@ -93,21 +92,7 @@ async function loadPage() {
 
 
 
-        // <div class="approval-box">
-        //     <p class="request-text">A user "Username" requested for "service name" for your shop "shopname" @at
-        //         "request
-        //         timestamp" </p>
-        //     <p class="timestamp">1/11/2021 5:50pm</p>
-        //     <div class="button-container">
-        //         <button class="accept">
-        //             <i class="fa-sharp fa-solid fa-check"></i>
-        //         </button>
-
-        //         <button class="deny">
-        //             <i class="fa-sharp fa-solid fa-xmark"></i>
-        //         </button>
-        //     </div>
-        // </div>
+        
 
 
         let approvalBox = document.createElement('div');

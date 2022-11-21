@@ -938,7 +938,8 @@ app.get('/get-review', async (req, res) => {
         connection.query(`SELECT * FROM reviews  WHERE reviewID='${reviewID}'`,
             function (err, result, fields) {
                 connection.end();
-                res.json({ error: false, result: result[0] });
+                let result1 = result?result[0]:null;
+                res.json({ error: false, result: result1 });
             });
     });
 })

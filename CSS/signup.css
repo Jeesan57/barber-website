@@ -29,7 +29,9 @@ select::-ms-expand {
 
 html,
 body {
-    background-color: var(--primary-color);
+    background-image: url("../assets/background-image.png");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .top-bar {

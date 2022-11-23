@@ -12,7 +12,9 @@
 
 html,
 body {
-  background-color: var(--primary-color);
+  background-image: url("../assets/background-image.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .page {
@@ -62,59 +64,55 @@ body {
   text-align: center;
 }
 
-.profile 
-{
+.profile {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .profile-info {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  .profile-info img {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    margin-right: 10px;
-    margin-top: 0px;
-  }
-  .profile-info p {
-    font-weight: bold;
-    font-size: 18px;
-    color: white;
-    
-  }
+.profile-info img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-right: 10px;
+  margin-top: 0px;
+}
+.profile-info p {
+  font-weight: bold;
+  font-size: 18px;
+  color: white;
+}
 
-  .rating {
-    font-weight: bold;
-    font-size: 18px;
-    color: white;
-    display: flex;
-    justify-content: center;
-  
-  }
+.rating {
+  font-weight: bold;
+  font-size: 18px;
+  color: white;
+  display: flex;
+  justify-content: center;
+}
 
-  .container {
-    max-height: 80vh;
-    overflow-y: scroll;
-  }
-  
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  .container::-webkit-scrollbar {
-    display: none;
-  }
-  
-  /* Hide scrollbar for IE, Edge and Firefox */
-  .container {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
-  
+.container {
+  max-height: 80vh;
+  overflow-y: scroll;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 .review-box {
   margin: auto;
   margin-top: 20px;

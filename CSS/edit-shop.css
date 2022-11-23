@@ -12,7 +12,6 @@
 
 html,
 body {
-  background-color: var(--primary-color);
 }
 
 .page {
@@ -20,6 +19,13 @@ body {
   flex-direction: column;
   height: 100vh;
   max-height: 100vh;
+
+  background-image: url("../assets/background-image.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+
+  overflow-y: scroll;
 }
 
 .top-bar {

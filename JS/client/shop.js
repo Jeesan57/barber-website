@@ -40,6 +40,8 @@ async function addBooking(shopName, serviceType, requestedBy, requestedForShop, 
     let requestID = getRandomString('BOOKING');
     let timestamp = Date.now();
 
+    if(requestTime === '' || !requestTime) return;
+
 
     await fetch(`http://localhost:3000/add-request?requestID=${requestID}&shopName=${shopName}&serviceType=${serviceType}&requestedBy=${requestedBy}&requestedForShop=${requestedForShop}&status=pending&requestTime=${requestTime}&timestamp=${timestamp}`, {
         method: 'GET',
